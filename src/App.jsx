@@ -213,8 +213,29 @@ const PLAYERS = RAW_PLAYERS.map((p) => ({
   image: p.image,
 }));
 
-const CAT_ORDER = [CAT.ICON, CAT.GK, CAT.DEFENDER, CAT.MIDFIELDER, CAT.FORWARD, CAT.YOUNG];
-const SORTED_PLAYERS = [...PLAYERS].sort((a, b) => CAT_ORDER.indexOf(a.category) - CAT_ORDER.indexOf(b.category));
+const CAT_ORDER = [CAT.ICON, CAT.FORWARD, CAT.MIDFIELDER, CAT.DEFENDER, CAT.GK, CAT.YOUNG];
+
+// Shuffle array helper
+function shuffleArray(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+// Group players by category and shuffle within each category
+const playersByCategory = {};
+PLAYERS.forEach(p => {
+  if (!playersByCategory[p.category]) playersByCategory[p.category] = [];
+  playersByCategory[p.category].push(p);
+});
+
+// Shuffle each category and concatenate in order
+const SORTED_PLAYERS = CAT_ORDER.flatMap(cat => 
+  shuffleArray(playersByCategory[cat] || [])
+);
 
 const STORAGE_KEY = "cpl_auction_data";
 
@@ -244,24 +265,28 @@ export default function App() {
         setPlayers(data.players || SORTED_PLAYERS);
         setTeams(data.teams || TEAMS.map(t => ({ ...t, budget: TOTAL_BUDGET - t.managerValue, squad: [] })));
         setLog(data.log || []);
+        setCurrentIdx(data.currentIdx || 0);
+        setActionHistory(data.actionHistory || []);
       } catch (e) {
         // Fallback to defaults
         setPlayers(SORTED_PLAYERS);
         setTeams(TEAMS.map(t => ({ ...t, budget: TOTAL_BUDGET - t.managerValue, squad: [] })));
         setLog([]);
+        setCurrentIdx(0);
       }
     } else {
       setPlayers(SORTED_PLAYERS);
       setTeams(TEAMS.map(t => ({ ...t, budget: TOTAL_BUDGET - t.managerValue, squad: [] })));
       setLog([]);
+      setCurrentIdx(0);
     }
   }, []);
 
   // Auto-save to localStorage whenever data changes
   useEffect(() => {
-    const data = { players, teams, log };
+    const data = { players, teams, log, currentIdx, actionHistory };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }, [players, teams, log]);
+  }, [players, teams, log, currentIdx, actionHistory]);
 
   const unsoldPlayers = players.filter(p => p.soldTo === null);
   const currentPlayer = unsoldPlayers[currentIdx] || null;
@@ -479,8 +504,10 @@ export default function App() {
         .bid-btn:active { transform: translateY(0); }
         .team-card { border-radius: 8px; padding: 16px; background: #1A1A1A; border: 1px solid #2a2a2a; transition: all 0.2s; }
         .team-card:hover { border-color: #3a3a3a; }
-        .player-row { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; background: #fff; color: #000; margin-bottom: 4px; font-family: 'Barlow', sans-serif; font-size: 0.9rem; transition: background 0.15s; }
-        .player-row:hover { background: #f0f0f0; }
+        .player-row { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; background: #2a2a2a; color: #fff; margin-bottom: 4px; font-family: 'Barlow', sans-serif; font-size: 0.9rem; transition: background 0.15s; }
+        .player-row:hover { background: #333; }
+        .manager-row { background: #333; }
+        .manager-row:hover { background: #3a3a3a; }
         .cat-badge { font-family: 'Bebas Neue', sans-serif; font-size: 0.7rem; letter-spacing: 1px; padding: 2px 8px; border-radius: 20px; }
         input[type=number], select { background: #1a1a2e; border: 1px solid #2d2d4e; color: #fff; border-radius: 6px; padding: 10px 14px; font-family: 'Barlow', sans-serif; font-size: 1rem; outline: none; width: 100%; }
         input[type=number]:focus, select:focus { border-color: #e63946; }
@@ -728,10 +755,10 @@ export default function App() {
                 </div>
 
                 {/* Manager player */}
-                <div className="player-row" style={{ background: `${t.color}15`, borderLeft: `2px solid ${t.color}` }}>
+                <div className="player-row manager-row" style={{ borderLeft: `2px solid ${t.color}` }}>
                   <div style={{ flex: 1 }}>
-                    <span style={{ fontSize: "0.85rem" }}>{t.managerPlayer}</span>
-                    <span className="body-text" style={{ color: "#fff", fontSize: "0.75rem", marginLeft: "8px" }}>Manager Player</span>
+                    <span style={{ fontSize: "0.85rem", color: "#fff" }}>{t.managerPlayer}</span>
+                    <span className="body-text" style={{ color: "#aaa", fontSize: "0.75rem", marginLeft: "8px" }}>Manager Player</span>
                   </div>
                   <div style={{ color: "#fff", fontSize: "0.8rem" }}>₹{t.managerValue}</div>
                 </div>
@@ -743,10 +770,10 @@ export default function App() {
                   <div key={i} className="player-row">
                     <div style={{ background: CAT_COLOR[p.category], width: "6px", height: "6px", borderRadius: "50%", flexShrink: 0 }}></div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: "0.85rem", color: "#000" }}>{p.name}</div>
-                      <div className="body-text" style={{ color: "#333", fontSize: "0.72rem" }}>{p.category} · Age {p.age}</div>
+                      <div style={{ fontSize: "0.85rem", color: "#fff" }}>{p.name}</div>
+                      <div className="body-text" style={{ color: "#aaa", fontSize: "0.72rem" }}>{p.category} · Age {p.age}</div>
                     </div>
-                    <div style={{ color: "#000", fontSize: "0.8rem", fontWeight: "700" }}>₹{p.soldFor}</div>
+                    <div style={{ color: "#fff", fontSize: "0.8rem", fontWeight: "700" }}>₹{p.soldFor}</div>
                   </div>
                 ))}
               </div>
