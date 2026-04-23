@@ -399,59 +399,63 @@ export default function App() {
 
       {/* AUCTION VIEW */}
       {view === "auction" && (
-        <div style={{ padding: "24px", display: "grid", gridTemplateColumns: "1fr 340px", gap: "24px", maxWidth: "1200px", margin: "0 auto" }}>
-          {/* Left - Current Player */}
-          <div>
-            {currentPlayer ? (
-              <div style={{ background: "linear-gradient(135deg, #0d0d1a, #1a0a1a)", border: "1px solid #2d1f3a", borderRadius: "12px", padding: "32px", marginBottom: "24px" }} className="glow">
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
-                  <div>
-                    <div style={{ fontSize: "0.7rem", letterSpacing: "3px", color: "#666", marginBottom: "6px" }} className="body-text">NOW UP FOR AUCTION</div>
-                    <div style={{ fontSize: "2.8rem", letterSpacing: "2px", lineHeight: 1, color: currentPlayer.category === CAT.ICON ? "#ffd700" : "#fff" }}>
-                      {currentPlayer.name}
-                    </div>
+        <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+          {/* Hero Section - Current Player */}
+          {currentPlayer ? (
+            <div style={{ background: "linear-gradient(135deg, #0d0d1a, #1a0a1a)", border: "1px solid #2d1f3a", borderRadius: "16px", padding: "40px", marginBottom: "32px", position: "relative", overflow: "hidden" }} className="glow">
+              <div style={{ position: "absolute", top: 0, right: 0, width: "300px", height: "300px", background: `radial-gradient(circle, ${CAT_COLOR[currentPlayer.category]}15, transparent)`, pointerEvents: "none" }}></div>
+              
+              <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", gap: "32px", alignItems: "center", position: "relative" }}>
+                {/* Player Avatar */}
+                <div style={{ width: "140px", height: "140px", borderRadius: "12px", background: `linear-gradient(135deg, ${CAT_COLOR[currentPlayer.category]}33, ${CAT_COLOR[currentPlayer.category]}11)`, border: `2px solid ${CAT_COLOR[currentPlayer.category]}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "4rem" }}>
+                  👤
+                </div>
+
+                {/* Player Info */}
+                <div>
+                  <div style={{ fontSize: "0.75rem", letterSpacing: "3px", color: "#666", marginBottom: "8px" }} className="body-text">NOW UP FOR AUCTION</div>
+                  <div style={{ fontSize: "3.5rem", letterSpacing: "2px", lineHeight: 1, color: currentPlayer.category === CAT.ICON ? "#ffd700" : "#fff", marginBottom: "12px", fontWeight: "700" }}>
+                    {currentPlayer.name.toUpperCase()}
                   </div>
-                  <div style={{ textAlign: "right" }}>
-                    <div style={{ background: CAT_COLOR[currentPlayer.category], color: "#000", padding: "4px 14px", borderRadius: "20px", fontSize: "0.8rem", letterSpacing: "1px", fontWeight: "700", marginBottom: "6px" }} className="body-text">
+                  <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+                    <div style={{ background: CAT_COLOR[currentPlayer.category], color: "#000", padding: "6px 18px", borderRadius: "24px", fontSize: "0.85rem", letterSpacing: "1px", fontWeight: "700" }} className="body-text">
                       {currentPlayer.category === CAT.ICON && "⭐ "}
                       {currentPlayer.category}
                     </div>
-                    <div className="body-text" style={{ color: "#888", fontSize: "0.85rem" }}>Age: {currentPlayer.age} · {currentPlayer.position}</div>
+                    <div className="body-text" style={{ color: "#888", fontSize: "0.95rem" }}>Age: {currentPlayer.age}</div>
+                    <div className="body-text" style={{ color: "#888", fontSize: "0.95rem" }}>• {currentPlayer.position}</div>
+                    <div className="body-text" style={{ color: "#444", fontSize: "0.85rem", marginLeft: "auto" }}>Player #{currentPlayer.id} of {players.length}</div>
                   </div>
                 </div>
 
-                <div style={{ background: "#0a0a0f", borderRadius: "8px", padding: "16px", marginBottom: "24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div className="body-text">
-                    <div style={{ color: "#555", fontSize: "0.7rem", letterSpacing: "2px" }}>BASE PRICE</div>
-                    <div style={{ fontSize: "2rem", color: "#ffd700" }}>₹{currentPlayer.basePrice}</div>
-                  </div>
-                  <div className="body-text" style={{ color: "#444", fontSize: "0.8rem" }}>
-                    Player #{currentPlayer.id} of {players.length}
-                  </div>
+                {/* Base Price */}
+                <div style={{ background: "#0a0a0f", borderRadius: "12px", padding: "24px", textAlign: "center", minWidth: "180px", border: "1px solid #1f1f3a" }}>
+                  <div className="body-text" style={{ color: "#555", fontSize: "0.75rem", letterSpacing: "2px", marginBottom: "8px" }}>BASE PRICE</div>
+                  <div style={{ fontSize: "2.8rem", color: "#ffd700", fontWeight: "700", lineHeight: 1 }}>₹{currentPlayer.basePrice}</div>
                 </div>
+              </div>
 
-                {/* Bid inputs */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "16px" }}>
-                  <div>
-                    <div className="body-text" style={{ color: "#555", fontSize: "0.7rem", letterSpacing: "1px", marginBottom: "6px" }}>BID AMOUNT (₹)</div>
-                    <input type="number" value={bidAmount} min={currentPlayer.basePrice} step={50}
-                      onChange={e => setBidAmount(e.target.value)} placeholder={`Min ₹${currentPlayer.basePrice}`} />
-                  </div>
-                  <div>
-                    <div className="body-text" style={{ color: "#555", fontSize: "0.7rem", letterSpacing: "1px", marginBottom: "6px" }}>WINNING TEAM</div>
-                    <select value={selectedTeam} onChange={e => setSelectedTeam(e.target.value)}>
-                      <option value="">Select Team...</option>
-                      {teams.map(t => (
-                        <option key={t.id} value={t.id} disabled={t.budget < currentPlayer.basePrice}>
-                          {t.name} (₹{t.budget} left)
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+              {/* Bid Controls */}
+              <div style={{ marginTop: "32px", display: "grid", gridTemplateColumns: "1fr 1fr 2fr", gap: "16px", alignItems: "end" }}>
+                <div>
+                  <div className="body-text" style={{ color: "#555", fontSize: "0.75rem", letterSpacing: "1px", marginBottom: "8px" }}>BID AMOUNT (₹)</div>
+                  <input type="number" value={bidAmount} min={currentPlayer.basePrice} step={50}
+                    onChange={e => setBidAmount(e.target.value)} placeholder={`Min ₹${currentPlayer.basePrice}`} 
+                    style={{ fontSize: "1.1rem", padding: "14px" }} />
                 </div>
-
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <button className="bid-btn" style={{ background: "#e63946", color: "#fff", flex: 2 }} onClick={sellPlayer}>
+                <div>
+                  <div className="body-text" style={{ color: "#555", fontSize: "0.75rem", letterSpacing: "1px", marginBottom: "8px" }}>WINNING TEAM</div>
+                  <select value={selectedTeam} onChange={e => setSelectedTeam(e.target.value)} style={{ fontSize: "1rem", padding: "14px" }}>
+                    <option value="">Select Team...</option>
+                    {teams.map(t => (
+                      <option key={t.id} value={t.id} disabled={t.budget < currentPlayer.basePrice}>
+                        {t.name} (₹{t.budget} left)
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div style={{ display: "flex", gap: "12px" }}>
+                  <button className="bid-btn" style={{ background: "#e63946", color: "#fff", flex: 2, fontSize: "1.2rem", padding: "14px" }} onClick={sellPlayer}>
                     🏷️ SOLD
                   </button>
                   <button className="bid-btn" style={{ background: "#1f2937", color: "#888", flex: 1 }} onClick={markUnsold}>
@@ -462,71 +466,56 @@ export default function App() {
                   </button>
                 </div>
               </div>
-            ) : (
-              <div style={{ background: "#0d0d1a", border: "1px solid #1f1f3a", borderRadius: "12px", padding: "60px", textAlign: "center" }}>
-                <div style={{ fontSize: "2rem", color: "#4cc9f0", marginBottom: "8px" }}>🏆 AUCTION COMPLETE</div>
-                <div className="body-text" style={{ color: "#666" }}>All players have been processed</div>
-              </div>
-            )}
-
-            {/* Upcoming players */}
-            <div>
-              <div style={{ fontSize: "1rem", letterSpacing: "3px", color: "#555", marginBottom: "12px" }}>UPCOMING PLAYERS</div>
-              <div style={{ maxHeight: "220px", overflowY: "auto" }}>
-                {unsoldPlayers.slice(currentIdx + 1, currentIdx + 8).map((p, i) => (
-                  <div key={p.id} className="player-row">
-                    <div style={{ width: "22px", textAlign: "center", color: "#444", fontSize: "0.8rem" }}>{i + 1}</div>
-                    <div style={{ background: CAT_COLOR[p.category], width: "6px", height: "6px", borderRadius: "50%", flexShrink: 0 }}></div>
-                    <div style={{ flex: 1 }}>{p.name}</div>
-                    <div style={{ color: "#555", fontSize: "0.8rem" }}>{p.category}</div>
-                    <div style={{ color: "#ffd700", fontSize: "0.85rem" }}>₹{p.basePrice}</div>
-                  </div>
-                ))}
-              </div>
             </div>
-          </div>
+          ) : (
+            <div style={{ background: "#0d0d1a", border: "1px solid #1f1f3a", borderRadius: "16px", padding: "80px", textAlign: "center", marginBottom: "32px" }}>
+              <div style={{ fontSize: "3rem", color: "#4cc9f0", marginBottom: "12px" }}>🏆 AUCTION COMPLETE</div>
+              <div className="body-text" style={{ color: "#666", fontSize: "1.1rem" }}>All players have been processed</div>
+            </div>
+          )}
 
-          {/* Right - Teams + Log */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            {/* Team budgets */}
-            <div>
-              <div style={{ fontSize: "1rem", letterSpacing: "3px", color: "#555", marginBottom: "12px" }}>TEAM BUDGETS</div>
+          {/* Team Budget Cards - Horizontal */}
+          <div style={{ marginBottom: "32px" }}>
+            <div style={{ fontSize: "1.1rem", letterSpacing: "3px", color: "#555", marginBottom: "16px" }}>TEAM BUDGETS</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px" }}>
               {teams.map(t => {
                 const pct = (t.budget / TOTAL_BUDGET) * 100;
                 return (
-                  <div key={t.id} className="team-card" style={{ marginBottom: "8px", borderLeft: `3px solid ${t.color}` }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
-                      <div>
-                        <div style={{ fontSize: "0.85rem", letterSpacing: "1px" }}>{t.name}</div>
-                        <div className="body-text" style={{ color: "#555", fontSize: "0.7rem" }}>{t.managerPlayer} · {t.squad.length} players</div>
-                      </div>
-                      <div style={{ textAlign: "right" }}>
-                        <div className="body-text" style={{ fontSize: "1.1rem", color: pct < 20 ? "#e63946" : pct < 40 ? "#f77f00" : "#4cc9f0", fontWeight: "700" }}>₹{t.budget}</div>
-                      </div>
-                    </div>
-                    <div style={{ background: "#0a0a0f", borderRadius: "4px", height: "4px", overflow: "hidden" }}>
+                  <div key={t.id} className="team-card" style={{ borderTop: `3px solid ${t.color}`, textAlign: "center" }}>
+                    <div style={{ fontSize: "0.95rem", letterSpacing: "1px", marginBottom: "4px" }}>{t.name}</div>
+                    <div className="body-text" style={{ color: "#555", fontSize: "0.7rem", marginBottom: "8px" }}>{t.managerPlayer}</div>
+                    <div className="body-text" style={{ fontSize: "1.6rem", color: pct < 20 ? "#e63946" : pct < 40 ? "#f77f00" : "#4cc9f0", fontWeight: "700", marginBottom: "8px" }}>₹{t.budget}</div>
+                    <div className="body-text" style={{ color: "#666", fontSize: "0.75rem", marginBottom: "8px" }}>{t.squad.length} players</div>
+                    <div style={{ background: "#0a0a0f", borderRadius: "4px", height: "6px", overflow: "hidden" }}>
                       <div style={{ background: t.color, height: "100%", width: `${pct}%`, transition: "width 0.5s ease", borderRadius: "4px" }}></div>
                     </div>
                   </div>
                 );
               })}
             </div>
+          </div>
 
-            {/* Bid log */}
-            <div>
-              <div style={{ fontSize: "1rem", letterSpacing: "3px", color: "#555", marginBottom: "12px" }}>RECENT SALES</div>
-              <div style={{ maxHeight: "260px", overflowY: "auto" }}>
-                {log.length === 0 && <div className="body-text" style={{ color: "#333", fontSize: "0.85rem", textAlign: "center", padding: "20px" }}>No sales yet</div>}
-                {log.map((l, i) => (
-                  <div key={i} className="player-row" style={{ background: "#0d0d1a" }}>
-                    <div style={{ background: CAT_COLOR[l.cat], width: "6px", height: "6px", borderRadius: "50%", flexShrink: 0 }}></div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: "0.85rem" }}>{l.player}</div>
-                      <div style={{ color: "#555", fontSize: "0.75rem" }}>{l.team}</div>
+          {/* Recent Sales */}
+          <div>
+            <div style={{ fontSize: "1.1rem", letterSpacing: "3px", color: "#555", marginBottom: "16px" }}>RECENT SALES</div>
+            <div style={{ background: "#0d0d1a", border: "1px solid #1f1f3a", borderRadius: "12px", padding: "16px", maxHeight: "300px", overflowY: "auto" }}>
+              {log.length === 0 && <div className="body-text" style={{ color: "#333", fontSize: "0.9rem", textAlign: "center", padding: "24px" }}>No sales yet</div>}
+              <div style={{ display: "grid", gap: "8px" }}>
+                {log.map((l, i) => {
+                  const team = teams.find(t => t.name === l.team);
+                  const player = players.find(p => p.name === l.player);
+                  return (
+                    <div key={i} className="player-row" style={{ background: "#111", padding: "12px" }}>
+                      <div style={{ background: CAT_COLOR[l.cat], width: "8px", height: "8px", borderRadius: "50%", flexShrink: 0 }}></div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: "0.95rem", marginBottom: "2px" }}>{l.player}</div>
+                        <div className="body-text" style={{ color: "#555", fontSize: "0.75rem" }}>{player?.position || ""} • Age {player?.age || ""}</div>
+                      </div>
+                      <div className="body-text" style={{ color: team?.color || "#888", fontSize: "0.85rem", marginRight: "12px" }}>{l.team}</div>
+                      <div style={{ color: "#ffd700", fontWeight: "700", fontSize: "1rem" }}>₹{l.amount}</div>
                     </div>
-                    <div style={{ color: "#ffd700", fontWeight: "700" }}>₹{l.amount}</div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
