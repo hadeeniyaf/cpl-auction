@@ -325,15 +325,7 @@ export default function App() {
     if (currentIdx >= remaining.length) setCurrentIdx(Math.max(0, remaining.length - 1));
   }
 
-  function markUnsold() {
-    setPlayers(prev => prev.map(p =>
-      p.id === currentPlayer.id ? { ...p, soldTo: "UNSOLD" } : p
-    ));
-    setLastBidder(null);
-    const remaining = unsoldPlayers.filter(p => p.id !== currentPlayer.id);
-    if (currentIdx >= remaining.length) setCurrentIdx(Math.max(0, remaining.length - 1));
-  }
-
+  
   function skipPlayer() {
     setCurrentIdx(i => (i + 1) % Math.max(1, unsoldPlayers.length));
   }
