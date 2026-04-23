@@ -122,8 +122,10 @@ const ICON_NAMES = ["HANOON JAVAD C","Anees","Hadee Niyaf","Asar","Shihab Ansil"
 function getCategory(name, position, age) {
   const normName = name.trim().toLowerCase();
   if (ICON_NAMES.some(n => n.toLowerCase() === normName)) return CAT.ICON;
-  if (age <= 18) return CAT.YOUNG;
+  // Force Radhin K and Sinan mk to be Goalkeepers
+  if (normName === "radhin k" || normName === "sinan mk") return CAT.GK;
   if (position === "Goal Keeper") return CAT.GK;
+  if (age <= 18) return CAT.YOUNG;
   if (position === "Forward") return CAT.FORWARD;
   if (position === "Midfielder") return CAT.MIDFIELDER;
   if (position === "Defender") return CAT.DEFENDER;
@@ -268,6 +270,12 @@ export default function App() {
     }
   }, [currentIdx, players, currentPlayer]);
 
+  function getBidIncrement(currentBid) {
+    if (currentBid < 150) return 5;
+    if (currentBid <= 250) return 10;
+    return 20;
+  }
+
   function placeBid(teamId) {
     if (!currentPlayer) return;
     
@@ -280,8 +288,18 @@ export default function App() {
     const team = teams.find(t => t.id === teamId);
     if (!team) return;
     
-    const currentBid = teamBids[teamId] || currentPlayer.basePrice;
-    const newBid = currentBid + 50;
+    // First bid is base price, subsequent bids increment based on current bid
+    const teamCurrentBid = teamBids[teamId];
+    let newBid;
+    
+    if (!teamCurrentBid) {
+      // First bid from this team - use base price
+      newBid = currentPlayer.basePrice;
+    } else {
+      // Subsequent bid - increment based on current highest bid
+      const increment = getBidIncrement(bidAmount);
+      newBid = bidAmount + increment;
+    }
     
     if (newBid > team.budget) {
       alert(`${team.name} only has ₹${team.budget} remaining!`);
@@ -327,7 +345,43 @@ export default function App() {
 
   
   function skipPlayer() {
-    setCurrentIdx(i => (i + 1) % Math.max(1, unsoldPlayers.length));
+    if (!currentPlayer) return;
+    
+    // Get all unsold players in current category
+    const currentCategory = currentPlayer.category;
+    const categoryPlayers = unsoldPlayers.filter(p => p.category === currentCategory);
+    const currentCategoryIdx = categoryPlayers.findIndex(p => p.id === currentPlayer.id);
+    
+    if (currentCategoryIdx < categoryPlayers.length - 1) {
+      // More players in current category - shuffle to next in category
+      const nextInCategory = categoryPlayers[currentCategoryIdx + 1];
+      const nextIdx = unsoldPlayers.findIndex(p => p.id === nextInCategory.id);
+      setCurrentIdx(nextIdx);
+    } else {
+      // Last player in category - move to next category
+      const catOrder = [CAT.ICON, CAT.FORWARD, CAT.MIDFIELDER, CAT.DEFENDER, CAT.GK, CAT.YOUNG];
+      const currentCatIdx = catOrder.indexOf(currentCategory);
+      
+      // Find next category with unsold players
+      let nextCategory = null;
+      for (let i = currentCatIdx + 1; i < catOrder.length; i++) {
+        const playersInCat = unsoldPlayers.filter(p => p.category === catOrder[i]);
+        if (playersInCat.length > 0) {
+          nextCategory = catOrder[i];
+          break;
+        }
+      }
+      
+      if (nextCategory) {
+        // Move to first player of next category
+        const nextCategoryPlayers = unsoldPlayers.filter(p => p.category === nextCategory);
+        const nextIdx = unsoldPlayers.findIndex(p => p.id === nextCategoryPlayers[0].id);
+        setCurrentIdx(nextIdx);
+      } else {
+        // No more categories - wrap to beginning
+        setCurrentIdx(0);
+      }
+    }
   }
 
   function resetAuction() {
@@ -454,9 +508,9 @@ export default function App() {
                 </div>
 
                 {/* Player Avatar - Center */}
-                <div style={{ position: "relative" }}>
-                  <button className="bid-btn" style={{ position: "absolute", left: "-80px", top: "50%", transform: "translateY(-50%)", background: "#1f2937", color: "#4cc9f0", padding: "12px 20px" }} onClick={skipPlayer}>
-                    ← SKIP
+                <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+                  <button className="bid-btn" style={{ background: "#1f2937", color: "#4cc9f0", padding: "12px 24px" }} onClick={skipPlayer}>
+                    SKIP
                   </button>
                   <div style={{ width: "160px", height: "160px", borderRadius: "12px", background: `linear-gradient(135deg, ${CAT_COLOR[currentPlayer.category]}33, ${CAT_COLOR[currentPlayer.category]}11)`, border: `3px solid ${CAT_COLOR[currentPlayer.category]}`, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <img 
@@ -478,8 +532,8 @@ export default function App() {
                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                   </div>
-                  <button className="bid-btn" style={{ position: "absolute", right: "-80px", top: "50%", transform: "translateY(-50%)", background: "#e63946", color: "#fff", fontSize: "1.1rem", padding: "12px 20px" }} onClick={sellPlayer} disabled={!selectedTeam}>
-                    SOLD →
+                  <button className="bid-btn" style={{ background: "#e63946", color: "#fff", fontSize: "1.1rem", padding: "12px 24px" }} onClick={sellPlayer} disabled={!selectedTeam}>
+                    SOLD
                   </button>
                 </div>
 
@@ -527,9 +581,9 @@ export default function App() {
                           cursor: lastBidder === t.id ? "not-allowed" : "pointer"
                         }} 
                         onClick={() => placeBid(t.id)}
-                        disabled={t.budget < (currentBid + 50) || lastBidder === t.id}
+                        disabled={lastBidder === t.id}
                       >
-                        {isHighestBidder ? `₹${currentBid}` : lastBidder === t.id ? 'WAIT' : 'BID +50'}
+                        {isHighestBidder ? `₹${currentBid}` : lastBidder === t.id ? 'WAIT' : teamBids[t.id] ? `BID +${getBidIncrement(bidAmount)}` : `BID ₹${currentPlayer.basePrice}`}
                       </button>
                     )}
                     <div style={{ background: "#0a0a0f", borderRadius: "4px", height: "4px", overflow: "hidden" }}>
