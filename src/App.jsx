@@ -133,71 +133,71 @@ function getCategory(name, position, age) {
 }
 
 const RAW_PLAYERS = [
-  { id: "CPL002", name: "HANOON JAVAD C", age: 21, position: "Forward" },
-  { id: "CPL003", name: "SADIQUE ALI K", age: 26, position: "Defender" },
-  { id: "CPL004", name: "Nasmal", age: 26, position: "Defender" },
-  { id: "CPL006", name: "FASEEH MUHAMMAD", age: 23, position: "Goal Keeper" },
-  { id: "CPL007", name: "Mahroos", age: 25, position: "Defender" },
-  { id: "CPL009", name: "Senee Rihab", age: 20, position: "Forward" },
-  { id: "CPL010", name: "muhammed Ahraf", age: 25, position: "Forward" },
-  { id: "CPL011", name: "Afraz Hussain", age: 20, position: "Forward" },
-  { id: "CPL012", name: "Anees", age: 21, position: "Midfielder" },
-  { id: "CPL014", name: "Rabah hussain", age: 21, position: "Defender" },
-  { id: "CPL015", name: "ALEEM", age: 22, position: "Forward" },
-  { id: "CPL016", name: "Anfas p", age: 19, position: "Forward" },
-  { id: "CPL017", name: "Sufiyan mk", age: 21, position: "Forward" },
-  { id: "CPL018", name: "Hamdan Mohammed", age: 21, position: "Defender" },
-  { id: "CPL019", name: "Hadee Niyaf", age: 22, position: "Midfielder" },
-  { id: "CPL021", name: "Arshad Paara", age: 25, position: "Forward" },
-  { id: "CPL022", name: "Mohammed shaheed TK", age: 35, position: "Midfielder" },
-  { id: "CPL023", name: "Abdullah zubair", age: 18, position: "Midfielder" },
-  { id: "CPL024", name: "ASHMIL. C", age: 20, position: "Midfielder" },
-  { id: "CPL025", name: "Rejee Nashath", age: 26, position: "Defender" },
-  { id: "CPL026", name: "Shakeeb", age: 29, position: "Goal Keeper" },
-  { id: "CPL027", name: "Mohammed Sinan n", age: 19, position: "Midfielder" },
-  { id: "CPL028", name: "Muhammad shahil tp", age: 18, position: "Forward" },
-  { id: "CPL029", name: "Muhammed Alsabith", age: 18, position: "Midfielder" },
-  { id: "CPL030", name: "Shihab Ansil", age: 24, position: "Defender" },
-  { id: "CPL032", name: "Muhammad Nihal k", age: 17, position: "Midfielder" },
-  { id: "CPL033", name: "Muhammad Sanfas v", age: 18, position: "Defender" },
-  { id: "CPL034", name: "Shanid PP", age: 22, position: "Goal Keeper" },
-  { id: "CPL035", name: "Muhammed Ashique.P", age: 18, position: "Forward" },
-  { id: "CPL036", name: "Muhammed juhaif", age: 19, position: "Defender" },
-  { id: "CPL037", name: "Nusaif", age: 26, position: "Forward" },
-  { id: "CPL038", name: "Muhammed nihal. N", age: 21, position: "Defender" },
-  { id: "CPL039", name: "Zemi", age: 16, position: "Midfielder" },
-  { id: "CPL040", name: "Irfanul Azeez", age: 26, position: "Defender" },
-  { id: "CPL041", name: "Muhammed Nisar", age: 16, position: "Defender" },
-  { id: "CPL042", name: "Muhsin TP", age: 32, position: "Defender" },
-  { id: "CPL043", name: "Shabeeh mk", age: 18, position: "Midfielder" },
-  { id: "CPL044", name: "Shahinsha AP", age: 22, position: "Defender" },
-  { id: "CPL045", name: "Ameen", age: 21, position: "Defender" },
-  { id: "CPL046", name: "Safvan", age: 29, position: "Forward" },
-  { id: "CPL047", name: "Ihsan syed mc", age: 20, position: "Defender" },
-  { id: "CPL048", name: "Nufais", age: 23, position: "Forward" },
-  { id: "CPL049", name: "Muhammad siyas k", age: 19, position: "Midfielder" },
-  { id: "CPL050", name: "Fadil hanan p", age: 20, position: "Goal Keeper" },
-  { id: "CPL051", name: "Zulfi", age: 33, position: "Defender" },
-  { id: "CPL052", name: "Rashid.k", age: 21, position: "Defender" },
-  { id: "CPL053", name: "Afnas N", age: 17, position: "Midfielder" },
-  { id: "CPL054", name: "Shuhaibmk", age: 17, position: "Midfielder" },
-  { id: "CPL055", name: "AJIL MC", age: 23, position: "Defender" },
-  { id: "CPL056", name: "ABDUL MUHSIN", age: 31, position: "Defender" },
-  { id: "CPL057", name: "Ajnas Junu", age: 29, position: "Midfielder" },
-  { id: "CPL058", name: "Sinan mk", age: 18, position: "Goal Keeper" },
-  { id: "CPL059", name: "KUTTU", age: 33, position: "Defender" },
-  { id: "CPL060", name: "Muhammed aman", age: 16, position: "Midfielder" },
-  { id: "CPL061", name: "FASIL AMEEN T P", age: 25, position: "Defender" },
-  { id: "CPL062", name: "Aswanth KC", age: 24, position: "Forward" },
-  { id: "CPL063", name: "Muhammad Risal", age: 17, position: "Defender" },
-  { id: "CPL064", name: "Suhail c", age: 34, position: "Midfielder" },
-  { id: "CPL065", name: "Muhammed Rizwan", age: 17, position: "Midfielder" },
-  { id: "CPL066", name: "Favaz", age: 29, position: "Midfielder" },
-  { id: "CPL067", name: "RADHIN K", age: 16, position: "Goal Keeper" },
-  { id: "CPL068", name: "Anshad Thayatheel", age: 32, position: "Defender" },
-  { id: "CPL069", name: "MOHAMMED SADIQALI K", age: 31, position: "Defender" },
-  { id: "CPL070", name: "Asar", age: 31, position: "Defender" },
-  { id: "CPL071", name: "Haneefa", age: 34, position: "Forward" },
+  { id: "CPL002", name: "HANOON JAVAD C", age: 21, position: "Forward", image: "CPL002.jpg" },
+  { id: "CPL003", name: "SADIQUE ALI K", age: 26, position: "Defender", image: "CPL003.jpeg" },
+  { id: "CPL004", name: "Nasmal", age: 26, position: "Defender", image: "CPL004.jpeg" },
+  { id: "CPL006", name: "FASEEH MUHAMMAD", age: 23, position: "Goal Keeper", image: "CPL006.jpeg" },
+  { id: "CPL007", name: "Mahroos", age: 25, position: "Defender", image: "CPL007.jpeg" },
+  { id: "CPL009", name: "Senee Rihab", age: 20, position: "Forward", image: "CPL009.png" },
+  { id: "CPL010", name: "muhammed Ahraf", age: 25, position: "Forward", image: "CPL010.jpeg" },
+  { id: "CPL011", name: "Afraz Hussain", age: 20, position: "Forward", image: "CPL011.jpeg" },
+  { id: "CPL012", name: "Anees", age: 21, position: "Midfielder", image: "CPL012.jpg" },
+  { id: "CPL014", name: "Rabah hussain", age: 21, position: "Defender", image: "CPL014.jpg" },
+  { id: "CPL015", name: "ALEEM", age: 22, position: "Forward", image: "CPL015.png" },
+  { id: "CPL016", name: "Anfas p", age: 19, position: "Forward", image: "CPL016.jpeg" },
+  { id: "CPL017", name: "Sufiyan mk", age: 21, position: "Forward", image: "CPL017.jpg" },
+  { id: "CPL018", name: "Hamdan Mohammed", age: 21, position: "Defender", image: "CPL018.jpg" },
+  { id: "CPL019", name: "Hadee Niyaf", age: 22, position: "Midfielder", image: "CPL019.png" },
+  { id: "CPL021", name: "Arshad Paara", age: 25, position: "Forward", image: "CPL021.png" },
+  { id: "CPL022", name: "Mohammed shaheed TK", age: 35, position: "Midfielder", image: "CPL022.jpg" },
+  { id: "CPL023", name: "Abdullah zubair", age: 18, position: "Midfielder", image: "CPL023.png" },
+  { id: "CPL024", name: "ASHMIL. C", age: 20, position: "Midfielder", image: "CPL024.jpg" },
+  { id: "CPL025", name: "Rejee Nashath", age: 26, position: "Defender", image: "CPL025.jpeg" },
+  { id: "CPL026", name: "Shakeeb", age: 29, position: "Goal Keeper", image: "CPL026.jpeg" },
+  { id: "CPL027", name: "Mohammed Sinan n", age: 19, position: "Midfielder", image: "CPL027.jpeg" },
+  { id: "CPL028", name: "Muhammad shahil tp", age: 18, position: "Forward", image: "CPL028.jpg" },
+  { id: "CPL029", name: "Muhammed Alsabith", age: 18, position: "Midfielder", image: "CPL029.jpeg" },
+  { id: "CPL030", name: "Shihab Ansil", age: 24, position: "Defender", image: "CPL030.jpeg" },
+  { id: "CPL032", name: "Muhammad Nihal k", age: 17, position: "Midfielder", image: "CPL032.jpg" },
+  { id: "CPL033", name: "Muhammad Sanfas v", age: 18, position: "Defender", image: "CPL033.jpg" },
+  { id: "CPL034", name: "Shanid PP", age: 22, position: "Goal Keeper", image: "CPL034.png" },
+  { id: "CPL035", name: "Muhammed Ashique.P", age: 18, position: "Forward", image: "CPL035.png" },
+  { id: "CPL036", name: "Muhammed juhaif", age: 19, position: "Defender", image: "CPL036.jpg" },
+  { id: "CPL037", name: "Nusaif", age: 26, position: "Forward", image: "CPL037.jpeg" },
+  { id: "CPL038", name: "Muhammed nihal. N", age: 21, position: "Defender", image: "CPL038.jpg" },
+  { id: "CPL039", name: "Zemi", age: 16, position: "Midfielder", image: "CPL039.jpg" },
+  { id: "CPL040", name: "Irfanul Azeez", age: 26, position: "Defender", image: "CPL040.jpeg" },
+  { id: "CPL041", name: "Muhammed Nisar", age: 16, position: "Defender", image: "CPL041.jpg" },
+  { id: "CPL042", name: "Muhsin TP", age: 32, position: "Defender", image: "CPL042.jpg" },
+  { id: "CPL043", name: "Shabeeh mk", age: 18, position: "Midfielder", image: "CPL043.jpg" },
+  { id: "CPL044", name: "Shahinsha AP", age: 22, position: "Defender", image: "CPL044.jpg" },
+  { id: "CPL045", name: "Ameen", age: 21, position: "Defender", image: "CPL045.jpg" },
+  { id: "CPL046", name: "Safvan", age: 29, position: "Forward", image: "CPL046.jpeg" },
+  { id: "CPL047", name: "Ihsan syed mc", age: 20, position: "Defender", image: "CPL047.png" },
+  { id: "CPL048", name: "Nufais", age: 23, position: "Forward", image: "CPL048.jpeg" },
+  { id: "CPL049", name: "Muhammad siyas k", age: 19, position: "Midfielder", image: "CPL049.jpg" },
+  { id: "CPL050", name: "Fadil hanan p", age: 20, position: "Goal Keeper", image: "CPL050.jpg" },
+  { id: "CPL051", name: "Zulfi", age: 33, position: "Defender", image: "CPL051.png" },
+  { id: "CPL052", name: "Rashid.k", age: 21, position: "Defender", image: "CPL052.jpeg" },
+  { id: "CPL053", name: "Afnas N", age: 17, position: "Midfielder", image: "CPL053.jpg" },
+  { id: "CPL054", name: "Shuhaibmk", age: 17, position: "Midfielder", image: "CPL054.jpg" },
+  { id: "CPL055", name: "AJIL MC", age: 23, position: "Defender", image: "CPL055.jpeg" },
+  { id: "CPL056", name: "ABDUL MUHSIN", age: 31, position: "Defender", image: "CPL056.jpeg" },
+  { id: "CPL057", name: "Ajnas Junu", age: 29, position: "Midfielder", image: "CPL057.jpeg" },
+  { id: "CPL058", name: "Sinan mk", age: 18, position: "Goal Keeper", image: "CPL058.png" },
+  { id: "CPL059", name: "KUTTU", age: 33, position: "Defender", image: "CPL059.jpeg" },
+  { id: "CPL060", name: "Muhammed aman", age: 16, position: "Midfielder", image: "CPL060.jpg" },
+  { id: "CPL061", name: "FASIL AMEEN T P", age: 25, position: "Defender", image: "CPL061.jpg" },
+  { id: "CPL062", name: "Aswanth KC", age: 24, position: "Forward", image: "CPL062.png" },
+  { id: "CPL063", name: "Muhammad Risal", age: 17, position: "Defender", image: "CPL063.jpg" },
+  { id: "CPL064", name: "Suhail c", age: 34, position: "Midfielder", image: "CPL064.jpg" },
+  { id: "CPL065", name: "Muhammed Rizwan", age: 17, position: "Midfielder", image: "CPL065.jpg" },
+  { id: "CPL066", name: "Favaz", age: 29, position: "Midfielder", image: "CPL066.jpeg" },
+  { id: "CPL067", name: "RADHIN K", age: 16, position: "Goal Keeper", image: "CPL067.jpg" },
+  { id: "CPL068", name: "Anshad Thayatheel", age: 32, position: "Defender", image: "CPL068.jpeg" },
+  { id: "CPL069", name: "MOHAMMED SADIQALI K", age: 31, position: "Defender", image: "CPL069.jpeg" },
+  { id: "CPL070", name: "Asar", age: 31, position: "Defender", image: "CPL070.jpeg" },
+  { id: "CPL071", name: "Haneefa", age: 34, position: "Forward", image: "CPL071.jpeg" },
 ];
 
 const PLAYERS = RAW_PLAYERS.map((p) => ({
@@ -209,7 +209,7 @@ const PLAYERS = RAW_PLAYERS.map((p) => ({
   basePrice: BASE_PRICE[getCategory(p.name, p.position, p.age)],
   soldTo: null,
   soldFor: null,
-  photoId: p.id,
+  image: p.image,
 }));
 
 const CAT_ORDER = [CAT.ICON, CAT.GK, CAT.DEFENDER, CAT.MIDFIELDER, CAT.FORWARD, CAT.YOUNG];
@@ -436,10 +436,10 @@ export default function App() {
       `}</style>
 
       {/* Header */}
-      <div style={{ background: "linear-gradient(135deg, #0d0d1a 0%, #1a0a0a 100%)", borderBottom: "1px solid #1f1f3a", padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ background: "linear-gradient(135deg, #0d0d1a 0%, #1a0a0a 100%)", borderBottom: "1px solid #1f1f3a", padding: "8px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <div style={{ fontSize: "1.6rem", letterSpacing: "3px", color: "#e63946" }}>CPL 2026</div>
-          <div className="body-text" style={{ fontSize: "0.65rem", color: "#666", letterSpacing: "2px" }}>PLAYER AUCTION TRACKER</div>
+          <div style={{ fontSize: "1.3rem", letterSpacing: "3px", color: "#e63946" }}>CPL 2026</div>
+          <div className="body-text" style={{ fontSize: "0.55rem", color: "#666", letterSpacing: "2px" }}>PLAYER AUCTION TRACKER</div>
         </div>
         <div style={{ display: "flex", gap: "24px", textAlign: "center" }} className="body-text">
           <div><div style={{ fontSize: "1.4rem", color: "#4cc9f0" }}>{soldCount}</div><div style={{ fontSize: "0.65rem", color: "#555", letterSpacing: "1px" }}>SOLD</div></div>
@@ -511,33 +511,28 @@ export default function App() {
                   <button className="bid-btn" style={{ background: "#1f2937", color: "#4cc9f0", padding: "12px 24px" }} onClick={skipPlayer}>
                     SKIP
                   </button>
-                  <div style={{ width: "160px", height: "160px", borderRadius: "12px", background: `linear-gradient(135deg, ${CAT_COLOR[currentPlayer.category]}33, ${CAT_COLOR[currentPlayer.category]}11)`, border: `3px solid ${CAT_COLOR[currentPlayer.category]}`, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <img 
-                      src={`/players-photos/${currentPlayer.photoId}.jpg`} 
-                      alt={currentPlayer.name}
-                      onError={(e) => {
-                        // Try different extensions if jpg fails
-                        const extensions = ['png', 'jpeg', 'JPG', 'JPEG', 'PNG', 'heic', 'HEIC', 'webp'];
-                        const currentSrc = e.target.src;
-                        const currentExt = currentSrc.split('.').pop().split('?')[0];
-                        const nextExtIndex = extensions.indexOf(currentExt) + 1;
-                        if (nextExtIndex < extensions.length) {
-                          e.target.src = `/players-photos/${currentPlayer.photoId}.${extensions[nextExtIndex]}`;
-                        } else {
-                          // Safely hide image and show fallback
+                  <div style={{ width: "180px", height: "240px", borderRadius: "12px", background: `linear-gradient(135deg, ${CAT_COLOR[currentPlayer.category]}33, ${CAT_COLOR[currentPlayer.category]}11)`, border: `3px solid ${CAT_COLOR[currentPlayer.category]}`, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    {currentPlayer.image ? (
+                      <img 
+                        src={`/players-photos/${currentPlayer.image}`} 
+                        alt={currentPlayer.name}
+                        onError={(e) => {
+                          // Show fallback on error
                           e.target.style.display = 'none';
                           const parent = e.target.parentElement;
                           if (parent && !parent.querySelector('.fallback-avatar')) {
                             const fallback = document.createElement('div');
                             fallback.className = 'fallback-avatar';
-                            fallback.style.fontSize = '5rem';
+                            fallback.style.fontSize = '6rem';
                             fallback.textContent = '👤';
                             parent.appendChild(fallback);
                           }
-                        }
-                      }}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
+                        }}
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      />
+                    ) : (
+                      <div style={{ fontSize: "6rem" }}>👤</div>
+                    )}
                   </div>
                   <button className="bid-btn" style={{ background: "#e63946", color: "#fff", fontSize: "1.1rem", padding: "12px 24px" }} onClick={sellPlayer} disabled={!selectedTeam}>
                     SOLD
