@@ -95,12 +95,12 @@ function downloadExcel(players, teams) {
 }
 
 const TEAMS = [
-  { id: "lamasia", name: "LA MASIA", managerPlayer: "Saiful Islam", manager: "Naji", managerValue: 80, color: "#e63946" },
-  { id: "homestead", name: "HOMESTEAD UNITED", managerPlayer: "Sreeshnu P", manager: "Areef", managerValue: 70, color: "#2a9d8f" },
-  { id: "fclagos", name: "FC LAGOS", managerPlayer: "Riju", manager: "Cherappu", managerValue: 70, color: "#e9c46a" },
-  { id: "boca", name: "BOCA JUNIOR", managerPlayer: "Semee Najath", manager: "Ameer", managerValue: 70, color: "#f4a261" },
-  { id: "galacticos", name: "GALACTICOS FC", managerPlayer: "Subuhan Ali", manager: "Ashraf Nani", managerValue: 100, color: "#a8dadc" },
-  { id: "athletic", name: "ATHLETIC FC", managerPlayer: "Fazil Nottan", manager: "Irshad", managerValue: 80, color: "#c77dff" },
+  { id: "lamasia", name: "LA MASIA", managerPlayer: "Saiful Islam", manager: "Naji", managerValue: 80, color: "#e63946", logo: "laMasia.png" },
+  { id: "homestead", name: "HOMESTEAD UNITED", managerPlayer: "Sreeshnu P", manager: "Areef", managerValue: 70, color: "#2a9d8f", logo: "homestead United.png" },
+  { id: "fclagos", name: "FC LAGOS", managerPlayer: "Riju", manager: "Cherappu", managerValue: 70, color: "#e9c46a", logo: "fcLagos.png" },
+  { id: "boca", name: "BOCA JUNIOR", managerPlayer: "Semee Najath", manager: "Ameer", managerValue: 70, color: "#f4a261", logo: "bocaJunior.png" },
+  { id: "galacticos", name: "GALACTICOS FC", managerPlayer: "Subuhan Ali", manager: "Ashraf Nani", managerValue: 100, color: "#a8dadc", logo: "galacticosFc.png" },
+  { id: "athletic", name: "ATHLETIC FC", managerPlayer: "Fazil Nottan", manager: "Irshad", managerValue: 80, color: "#c77dff", logo: "athletic-fc.png" },
 ];
 
 const TOTAL_BUDGET = 2000;
@@ -230,6 +230,9 @@ export default function App() {
   const [filterCat, setFilterCat] = useState("All");
   const [search, setSearch] = useState("");
   const [showResetModal, setShowResetModal] = useState(false);
+  const [showSoldModal, setShowSoldModal] = useState(false);
+  const [soldPlayerData, setSoldPlayerData] = useState(null);
+  const [actionHistory, setActionHistory] = useState([]);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -325,6 +328,19 @@ export default function App() {
       return;
     }
 
+    // Save state for undo
+    const undoAction = {
+      type: 'SELL',
+      player: { ...currentPlayer },
+      team: selectedTeam,
+      amount: amount,
+      previousPlayers: players,
+      previousTeams: teams,
+      previousLog: log,
+      previousIdx: currentIdx,
+      timestamp: Date.now()
+    };
+
     setTeams(prev => prev.map(t =>
       t.id === selectedTeam
         ? { ...t, budget: t.budget - amount, squad: [...t.squad, { ...currentPlayer, soldFor: amount }] }
@@ -334,12 +350,48 @@ export default function App() {
       p.id === currentPlayer.id ? { ...p, soldTo: selectedTeam, soldFor: amount } : p
     ));
     setLog(prev => [{ player: currentPlayer.name, team: team.name, amount, cat: currentPlayer.category }, ...prev]);
+    
+    // Show sold modal
+    setSoldPlayerData({
+      player: currentPlayer,
+      team: team,
+      amount: amount
+    });
+    setShowSoldModal(true);
+    
+    // Add to action history (keep last 10)
+    setActionHistory(prev => [undoAction, ...prev].slice(0, 10));
+    
     setSelectedTeam("");
     setBidAmount("");
     setTeamBids({});
     setLastBidder(null);
     const remaining = unsoldPlayers.filter(p => p.id !== currentPlayer.id);
     if (currentIdx >= remaining.length) setCurrentIdx(Math.max(0, remaining.length - 1));
+  }
+
+  function undoLastAction() {
+    if (actionHistory.length === 0) {
+      alert('No actions to undo!');
+      return;
+    }
+
+    const lastAction = actionHistory[0];
+    
+    // Restore previous state
+    setPlayers(lastAction.previousPlayers);
+    setTeams(lastAction.previousTeams);
+    setLog(lastAction.previousLog);
+    setCurrentIdx(lastAction.previousIdx);
+    
+    // Remove from history
+    setActionHistory(prev => prev.slice(1));
+    
+    // Reset current bid state
+    setSelectedTeam("");
+    setBidAmount(lastAction.player.basePrice);
+    setTeamBids({});
+    setLastBidder(null);
   }
 
   
@@ -433,6 +485,15 @@ export default function App() {
         .modal-content p { color: #888; margin-bottom: 20px; font-family: 'Barlow'; }
         .modal-btns { display: flex; gap: 10px; }
         .modal-btns button { flex: 1; padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-family: 'Bebas Neue'; letter-spacing: 1px; }
+        .sold-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+        .sold-modal-content { background: linear-gradient(135deg, #0d0d1a, #1a0a1a); border: 2px solid #e63946; border-radius: 16px; padding: 40px; max-width: 700px; text-align: center; position: relative; }
+        .sold-modal-close { position: absolute; top: 15px; right: 15px; background: #1f2937; color: #fff; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
+        .sold-modal-close:hover { background: #e63946; }
+        .transfer-container { display: flex; align-items: center; justify-content: center; gap: 30px; margin: 30px 0; }
+        .player-sold-img { width: 150px; height: 200px; border-radius: 12px; object-fit: cover; border: 3px solid #4cc9f0; }
+        .triple-arrow { font-size: 3rem; color: #ffd700; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
+        .team-logo-sold { width: 120px; height: 120px; object-fit: contain; border-radius: 12px; background: rgba(255,255,255,0.1); padding: 10px; }
       `}</style>
 
       {/* Header */}
@@ -472,13 +533,23 @@ export default function App() {
         </div>
       )}
 
-      {/* Tabs */}
-      <div style={{ borderBottom: "1px solid #1f1f3a", padding: "0 24px", display: "flex", gap: "4px" }}>
-        {["auction", "squads", "players"].map(v => (
-          <button key={v} className={`tab-btn ${view === v ? "active" : ""}`} onClick={() => setView(v)}>
-            {v === "auction" ? "⚡ AUCTION" : v === "squads" ? "🛡️ SQUADS" : "📋 ALL PLAYERS"}
-          </button>
-        ))}
+      {/* Navigation */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 24px", borderBottom: "1px solid #1f1f3a", marginBottom: "24px" }}>
+        <div style={{ display: "flex", gap: "16px" }}>
+          {["auction", "squads", "players"].map(v => (
+            <button key={v} className="bid-btn" style={{ background: view === v ? "#4cc9f0" : "#1f2937", color: view === v ? "#000" : "#fff" }} onClick={() => setView(v)}>
+              {v === "auction" ? "⚡ AUCTION" : v === "squads" ? "🛡️ SQUADS" : "📋 ALL PLAYERS"}
+            </button>
+          ))}
+        </div>
+        <button 
+          className="bid-btn" 
+          style={{ background: actionHistory.length > 0 ? "#f77f00" : "#555", color: "#fff", opacity: actionHistory.length > 0 ? 1 : 0.5 }} 
+          onClick={undoLastAction}
+          disabled={actionHistory.length === 0}
+        >
+          ↶ UNDO ({actionHistory.length})
+        </button>
       </div>
 
       {/* AUCTION VIEW */}
@@ -729,6 +800,91 @@ export default function App() {
                 </div>
               );
             })}
+          </div>
+        </div>
+      )}
+
+      {/* Sold Player Modal */}
+      {showSoldModal && soldPlayerData && (
+        <div className="sold-modal" onClick={() => setShowSoldModal(false)}>
+          <div className="sold-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="sold-modal-close" onClick={() => setShowSoldModal(false)}>×</button>
+            
+            <div style={{ fontSize: "2.5rem", color: "#4cc9f0", fontFamily: "'Bebas Neue', cursive", letterSpacing: "3px", marginBottom: "10px" }}>
+              ⚡ DEAL DONE ⚡
+            </div>
+            
+            <div className="transfer-container">
+              {/* Player Image */}
+              <div style={{ textAlign: "center" }}>
+                {soldPlayerData.player.image ? (
+                  <img 
+                    src={`/players-photos/${soldPlayerData.player.image}`} 
+                    alt={soldPlayerData.player.name}
+                    className="player-sold-img"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      const parent = e.target.parentElement;
+                      if (parent && !parent.querySelector('.fallback-sold')) {
+                        const fallback = document.createElement('div');
+                        fallback.className = 'fallback-sold';
+                        fallback.style.cssText = 'width: 150px; height: 200px; border-radius: 12px; border: 3px solid #4cc9f0; display: flex; align-items: center; justify-content: center; font-size: 4rem; background: linear-gradient(135deg, #1a1a2e, #0d0d1a);';
+                        fallback.textContent = '👤';
+                        parent.appendChild(fallback);
+                      }
+                    }}
+                  />
+                ) : (
+                  <div style={{ width: "150px", height: "200px", borderRadius: "12px", border: "3px solid #4cc9f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "4rem", background: "linear-gradient(135deg, #1a1a2e, #0d0d1a)" }}>👤</div>
+                )}
+                <div style={{ fontSize: "1.2rem", color: "#fff", marginTop: "10px", fontFamily: "'Bebas Neue', cursive" }}>
+                  {soldPlayerData.player.name}
+                </div>
+              </div>
+
+              {/* Triple Arrow */}
+              <div className="triple-arrow">⇉⇉⇉</div>
+
+              {/* Team Logo */}
+              <div style={{ textAlign: "center" }}>
+                <img 
+                  src={`/team-logo/${soldPlayerData.team.logo}`} 
+                  alt={soldPlayerData.team.name}
+                  className="team-logo-sold"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    const parent = e.target.parentElement;
+                    if (parent && !parent.querySelector('.fallback-logo')) {
+                      const fallback = document.createElement('div');
+                      fallback.className = 'fallback-logo';
+                      fallback.style.cssText = `width: 120px; height: 120px; border-radius: 12px; background: ${soldPlayerData.team.color}; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #000; font-weight: bold;`;
+                      fallback.textContent = soldPlayerData.team.name.substring(0, 2);
+                      parent.appendChild(fallback);
+                    }
+                  }}
+                />
+                <div style={{ fontSize: "1.2rem", color: soldPlayerData.team.color, marginTop: "10px", fontFamily: "'Bebas Neue', cursive", fontWeight: "700" }}>
+                  {soldPlayerData.team.name}
+                </div>
+              </div>
+            </div>
+
+            {/* Price */}
+            <div style={{ fontSize: "3rem", color: "#ffd700", fontFamily: "'Bebas Neue', cursive", marginTop: "20px" }}>
+              ₹{soldPlayerData.amount}
+            </div>
+            
+            <div className="body-text" style={{ color: "#888", fontSize: "0.9rem", marginTop: "10px" }}>
+              {soldPlayerData.player.position} • {soldPlayerData.player.category} • Age {soldPlayerData.player.age}
+            </div>
+
+            <button 
+              className="bid-btn" 
+              style={{ background: "#4cc9f0", color: "#000", marginTop: "30px", padding: "12px 40px", fontSize: "1.1rem" }}
+              onClick={() => setShowSoldModal(false)}
+            >
+              CONTINUE
+            </button>
           </div>
         </div>
       )}
