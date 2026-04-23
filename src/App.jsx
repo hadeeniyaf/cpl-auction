@@ -491,9 +491,9 @@ export default function App() {
         .sold-modal-close:hover { background: #e63946; }
         .transfer-container { display: flex; align-items: center; justify-content: center; gap: 30px; margin: 30px 0; }
         .player-sold-img { width: 150px; height: 200px; border-radius: 12px; object-fit: cover; border: 3px solid #4cc9f0; }
-        .triple-arrow { font-size: 3rem; color: #ffd700; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
-        .team-logo-sold { width: 120px; height: 120px; object-fit: contain; border-radius: 12px; background: rgba(255,255,255,0.1); padding: 10px; }
+        .transfer-arrow-btn { background: #4cc9f0; color: #000; border: none; width: 50px; height: 50px; border-radius: 8px; cursor: pointer; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; font-weight: 700; transition: all 0.2s ease; }
+        .transfer-arrow-btn:hover { background: #ffd700; transform: scale(1.1); }
+        .team-logo-sold { width: 120px; height: 120px; object-fit: contain; border-radius: 12px; background: rgba(255,255,255,0.1); padding: 10px; display: flex; align-items: center; justify-content: center; }
       `}</style>
 
       {/* Header */}
@@ -811,11 +811,11 @@ export default function App() {
             <button className="sold-modal-close" onClick={() => setShowSoldModal(false)}>×</button>
             
             <div style={{ fontSize: "2.5rem", color: "#4cc9f0", fontFamily: "'Bebas Neue', cursive", letterSpacing: "3px", marginBottom: "10px" }}>
-              ⚡ DEAL DONE ⚡
+              DEAL DONE
             </div>
             
-            <div className="transfer-container">
-              {/* Player Image */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "20px", margin: "30px 0" }}>
+              {/* Player Section */}
               <div style={{ textAlign: "center" }}>
                 {soldPlayerData.player.image ? (
                   <img 
@@ -842,11 +842,11 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Triple Arrow */}
-              <div className="triple-arrow">⇉⇉⇉</div>
+              {/* Transfer Arrow Button */}
+              <button className="transfer-arrow-btn">→</button>
 
-              {/* Team Logo */}
-              <div style={{ textAlign: "center" }}>
+              {/* Team Section */}
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "10px" }}>
                 <img 
                   src={`/team-logo/${soldPlayerData.team.logo}`} 
                   alt={soldPlayerData.team.name}
@@ -863,7 +863,7 @@ export default function App() {
                     }
                   }}
                 />
-                <div style={{ fontSize: "1.2rem", color: soldPlayerData.team.color, marginTop: "10px", fontFamily: "'Bebas Neue', cursive", fontWeight: "700" }}>
+                <div style={{ fontSize: "1.2rem", color: soldPlayerData.team.color, fontFamily: "'Bebas Neue', cursive", fontWeight: "700" }}>
                   {soldPlayerData.team.name}
                 </div>
               </div>
