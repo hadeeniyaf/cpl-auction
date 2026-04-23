@@ -144,7 +144,7 @@ const RAW_PLAYERS = [
   { id: "CPL012", name: "Anees", age: 21, position: "Midfielder" },
   { id: "CPL014", name: "Rabah hussain", age: 21, position: "Defender" },
   { id: "CPL015", name: "ALEEM", age: 22, position: "Forward" },
-  { id: "CPL016", name: "Anfas p", age: 19, position: "Defender" },
+  { id: "CPL016", name: "Anfas p", age: 19, position: "Forward" },
   { id: "CPL017", name: "Sufiyan mk", age: 21, position: "Forward" },
   { id: "CPL018", name: "Hamdan Mohammed", age: 21, position: "Defender" },
   { id: "CPL019", name: "Hadee Niyaf", age: 22, position: "Midfielder" },
@@ -288,15 +288,14 @@ export default function App() {
     const team = teams.find(t => t.id === teamId);
     if (!team) return;
     
-    // First bid is base price, subsequent bids increment based on current bid
-    const teamCurrentBid = teamBids[teamId];
+    // First bid for the player is base price, all subsequent bids increment from current highest
     let newBid;
     
-    if (!teamCurrentBid) {
-      // First bid from this team - use base price
+    if (bidAmount === currentPlayer.basePrice && Object.keys(teamBids).length === 0) {
+      // Very first bid for this player - use base price
       newBid = currentPlayer.basePrice;
     } else {
-      // Subsequent bid - increment based on current highest bid
+      // Any subsequent bid - increment based on current highest bid
       const increment = getBidIncrement(bidAmount);
       newBid = bidAmount + increment;
     }
@@ -525,8 +524,16 @@ export default function App() {
                         if (nextExtIndex < extensions.length) {
                           e.target.src = `/players-photos/${currentPlayer.photoId}.${extensions[nextExtIndex]}`;
                         } else {
+                          // Safely hide image and show fallback
                           e.target.style.display = 'none';
-                          e.target.parentElement.innerHTML = '<div style="font-size: 5rem">👤</div>';
+                          const parent = e.target.parentElement;
+                          if (parent && !parent.querySelector('.fallback-avatar')) {
+                            const fallback = document.createElement('div');
+                            fallback.className = 'fallback-avatar';
+                            fallback.style.fontSize = '5rem';
+                            fallback.textContent = '👤';
+                            parent.appendChild(fallback);
+                          }
                         }
                       }}
                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
@@ -541,6 +548,11 @@ export default function App() {
                 <div style={{ textAlign: "right" }}>
                   <div className="body-text" style={{ color: "#555", fontSize: "0.65rem", letterSpacing: "2px", marginBottom: "6px" }}>CURRENT BID</div>
                   <div style={{ fontSize: "3.75rem", color: "#ffd700", fontWeight: "700", lineHeight: 1, marginBottom: "6px" }}>₹{bidAmount}</div>
+                  {selectedTeam && (
+                    <div style={{ fontSize: "1.1rem", color: teams.find(t => t.id === selectedTeam)?.color || "#fff", fontWeight: "700", marginBottom: "8px" }}>
+                      {teams.find(t => t.id === selectedTeam)?.name}
+                    </div>
+                  )}
                   <div className="body-text" style={{ color: "#444", fontSize: "0.75rem" }}>Base: ₹{currentPlayer.basePrice}</div>
                   <div className="body-text" style={{ color: "#444", fontSize: "0.75rem" }}>Player {currentPlayer.id}</div>
                 </div>
@@ -583,7 +595,7 @@ export default function App() {
                         onClick={() => placeBid(t.id)}
                         disabled={lastBidder === t.id}
                       >
-                        {isHighestBidder ? `₹${currentBid}` : lastBidder === t.id ? 'WAIT' : teamBids[t.id] ? `BID +${getBidIncrement(bidAmount)}` : `BID ₹${currentPlayer.basePrice}`}
+                        {isHighestBidder ? `₹${currentBid}` : lastBidder === t.id ? 'WAIT' : (bidAmount === currentPlayer.basePrice && Object.keys(teamBids).length === 0) ? `BID ₹${currentPlayer.basePrice}` : `BID +${getBidIncrement(bidAmount)}`}
                       </button>
                     )}
                     <div style={{ background: "#0a0a0f", borderRadius: "4px", height: "4px", overflow: "hidden" }}>
