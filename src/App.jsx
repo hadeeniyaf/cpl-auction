@@ -117,7 +117,7 @@ const CAT_COLOR = {
   [CAT.YOUNG]: "#b5838d",
 };
 
-const ICON_NAMES = ["HANOON JAVAD C","Anees","Hadee Niyaf","Asar","Shihab Ansil","Nusaif","AJIL MC","Hisham Kodi","Favaz","Safvan","Mahroos","FASIL AMEEN T P"];
+const ICON_NAMES = ["HANOON JAVAD C","Anees","Hadee Niyaf","Asar","Shihab Ansil","Nusaif","AJIL MC","Hisham Kodi","Favaz","Safvan","Mahroos","FASIL AMEEN T P","Hisham Kodi"];
 
 function getCategory(name, position, age) {
   const normName = name.trim().toLowerCase();
@@ -193,11 +193,12 @@ const RAW_PLAYERS = [
   { id: "CPL064", name: "Suhail c", age: 34, position: "Midfielder", image: "CPL064.jpg" },
   { id: "CPL065", name: "Muhammed Rizwan", age: 17, position: "Midfielder", image: "CPL065.jpg" },
   { id: "CPL066", name: "Favaz", age: 29, position: "Midfielder", image: "CPL066.jpeg" },
-  { id: "CPL067", name: "RADHIN K", age: 16, position: "Goal Keeper", image: "CPL067.jpg" },
+  { id: "CPL067", name: "Radhin K", age: 16, position: "Goal Keeper", image: "CPL067.jpg" },
   { id: "CPL068", name: "Anshad Thayatheel", age: 32, position: "Defender", image: "CPL068.jpeg" },
   { id: "CPL069", name: "MOHAMMED SADIQALI K", age: 31, position: "Defender", image: "CPL069.jpeg" },
   { id: "CPL070", name: "Asar", age: 31, position: "Defender", image: "CPL070.jpeg" },
   { id: "CPL071", name: "Haneefa", age: 34, position: "Forward", image: "CPL071.jpeg" },
+  { id: "CPL072", name: "Hisham Kodi", age: 25, position: "Forward", image: "CPL072.png" },
 ];
 
 const PLAYERS = RAW_PLAYERS.map((p) => ({
@@ -455,11 +456,19 @@ export default function App() {
   const remainingCount = players.filter(p => !p.soldTo).length;
 
   return (
-    <div style={{ fontFamily: "'Bebas Neue', 'Impact', sans-serif", background: "#0a0a0f", minHeight: "100vh", color: "#fff" }}>
+    <div style={{ fontFamily: "'Bebas Neue', 'Impact', sans-serif", background: "#060606", minHeight: "100vh", color: "#fff" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0f; }
+        body { background: #060606; }
+        @media (max-width: 768px) {
+          .hero-grid { grid-template-columns: 1fr !important; }
+          .team-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .squad-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .team-grid { grid-template-columns: 1fr !important; }
+        }
         .body-text { font-family: 'Barlow', sans-serif; }
         ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: #111; } ::-webkit-scrollbar-thumb { background: #333; }
         .tab-btn { background: transparent; border: none; color: #888; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 2px; padding: 10px 20px; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
@@ -468,10 +477,10 @@ export default function App() {
         .bid-btn { font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px; font-size: 1.1rem; padding: 12px 28px; border: none; cursor: pointer; border-radius: 4px; transition: all 0.15s; }
         .bid-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
         .bid-btn:active { transform: translateY(0); }
-        .team-card { border-radius: 8px; padding: 16px; background: #111827; border: 1px solid #1f2937; transition: all 0.2s; }
-        .team-card:hover { border-color: #374151; }
-        .player-row { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; background: #111; margin-bottom: 4px; font-family: 'Barlow', sans-serif; font-size: 0.9rem; transition: background 0.15s; }
-        .player-row:hover { background: #1a1a2e; }
+        .team-card { border-radius: 8px; padding: 16px; background: #1A1A1A; border: 1px solid #2a2a2a; transition: all 0.2s; }
+        .team-card:hover { border-color: #3a3a3a; }
+        .player-row { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; background: #fff; color: #000; margin-bottom: 4px; font-family: 'Barlow', sans-serif; font-size: 0.9rem; transition: background 0.15s; }
+        .player-row:hover { background: #f0f0f0; }
         .cat-badge { font-family: 'Bebas Neue', sans-serif; font-size: 0.7rem; letter-spacing: 1px; padding: 2px 8px; border-radius: 20px; }
         input[type=number], select { background: #1a1a2e; border: 1px solid #2d2d4e; color: #fff; border-radius: 6px; padding: 10px 14px; font-family: 'Barlow', sans-serif; font-size: 1rem; outline: none; width: 100%; }
         input[type=number]:focus, select:focus { border-color: #e63946; }
@@ -500,12 +509,12 @@ export default function App() {
       <div style={{ background: "linear-gradient(135deg, #0d0d1a 0%, #1a0a0a 100%)", borderBottom: "1px solid #1f1f3a", padding: "8px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
           <div style={{ fontSize: "1.3rem", letterSpacing: "3px", color: "#e63946" }}>CPL 2026</div>
-          <div className="body-text" style={{ fontSize: "0.55rem", color: "#666", letterSpacing: "2px" }}>PLAYER AUCTION TRACKER</div>
+          <div className="body-text" style={{ fontSize: "0.55rem", color: "#fff", letterSpacing: "2px" }}>PLAYER AUCTION TRACKER</div>
         </div>
         <div style={{ display: "flex", gap: "24px", textAlign: "center" }} className="body-text">
-          <div><div style={{ fontSize: "1.4rem", color: "#4cc9f0" }}>{soldCount}</div><div style={{ fontSize: "0.65rem", color: "#555", letterSpacing: "1px" }}>SOLD</div></div>
-          <div><div style={{ fontSize: "1.4rem", color: "#ffd700" }}>{remainingCount}</div><div style={{ fontSize: "0.65rem", color: "#555", letterSpacing: "1px" }}>REMAINING</div></div>
-          <div><div style={{ fontSize: "1.4rem", color: "#888" }}>{unsoldCount}</div><div style={{ fontSize: "0.65rem", color: "#555", letterSpacing: "1px" }}>UNSOLD</div></div>
+          <div><div style={{ fontSize: "1.4rem", color: "#4cc9f0" }}>{soldCount}</div><div style={{ fontSize: "0.65rem", color: "#fff", letterSpacing: "1px" }}>SOLD</div></div>
+          <div><div style={{ fontSize: "1.4rem", color: "#ffd700" }}>{remainingCount}</div><div style={{ fontSize: "0.65rem", color: "#fff", letterSpacing: "1px" }}>REMAINING</div></div>
+          <div><div style={{ fontSize: "1.4rem", color: "#888" }}>{unsoldCount}</div><div style={{ fontSize: "0.65rem", color: "#fff", letterSpacing: "1px" }}>UNSOLD</div></div>
         </div>
         <div style={{ display: "flex", gap: "10px" }}>
           {(soldCount > 0 || unsoldCount > 0) && (
@@ -513,7 +522,7 @@ export default function App() {
               📥 EXPORT CSV
             </button>
           )}
-          <button className="bid-btn" style={{ background: "#333", color: "#888" }} onClick={() => setShowResetModal(true)}>
+          <button className="bid-btn" style={{ background: "#333", color: "#fff" }} onClick={() => setShowResetModal(true)}>
             🔄 RESET
           </button>
         </div>
@@ -557,14 +566,14 @@ export default function App() {
         <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
           {/* Hero Section - Current Player */}
           {currentPlayer ? (
-            <div style={{ background: "linear-gradient(135deg, #0d0d1a, #1a0a1a)", border: "1px solid #2d1f3a", borderRadius: "12px", padding: "24px", marginBottom: "24px", position: "relative", overflow: "hidden" }} className="glow">
+            <div style={{ background: "#1A1A1A", border: "1px solid #2a2a2a", borderRadius: "12px", padding: "24px", marginBottom: "24px", position: "relative", overflow: "hidden" }} className="glow">
               <div style={{ position: "absolute", top: 0, right: 0, width: "200px", height: "200px", background: `radial-gradient(circle, ${CAT_COLOR[currentPlayer.category]}15, transparent)`, pointerEvents: "none" }}></div>
               
-              <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: "24px", alignItems: "center", position: "relative" }}>
+              <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: "24px", alignItems: "center", position: "relative" }}>
                 {/* Player Info - Left */}
                 <div>
-                  <div style={{ fontSize: "0.65rem", letterSpacing: "2px", color: "#666", marginBottom: "6px" }} className="body-text">NOW UP FOR AUCTION</div>
-                  <div style={{ fontSize: "3.3rem", letterSpacing: "2px", lineHeight: 1.1, color: currentPlayer.category === CAT.ICON ? "#ffd700" : "#fff", marginBottom: "10px", fontWeight: "700" }}>
+                  <div style={{ fontSize: "0.8rem", letterSpacing: "2px", color: "#fff", marginBottom: "10px" }} className="body-text">NOW UP FOR AUCTION</div>
+                  <div style={{ fontSize: "6rem", letterSpacing: "2px", lineHeight: 1, color: currentPlayer.category === CAT.ICON ? "#ffd700" : "#fff", marginBottom: "15px", fontWeight: "700" }}>
                     {currentPlayer.name.toUpperCase()}
                   </div>
                   <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
@@ -572,8 +581,8 @@ export default function App() {
                       {currentPlayer.category === CAT.ICON && "⭐ "}
                       {currentPlayer.category}
                     </div>
-                    <div className="body-text" style={{ color: "#888", fontSize: "0.85rem" }}>Age: {currentPlayer.age}</div>
-                    <div className="body-text" style={{ color: "#888", fontSize: "0.85rem" }}>• {currentPlayer.position}</div>
+                    <div className="body-text" style={{ color: "#fff", fontSize: "0.85rem" }}>Age: {currentPlayer.age}</div>
+                    <div className="body-text" style={{ color: "#fff", fontSize: "0.85rem" }}>• {currentPlayer.position}</div>
                   </div>
                 </div>
 
@@ -612,45 +621,45 @@ export default function App() {
 
                 {/* Current Bid - Right */}
                 <div style={{ textAlign: "right" }}>
-                  <div className="body-text" style={{ color: "#555", fontSize: "0.65rem", letterSpacing: "2px", marginBottom: "6px" }}>CURRENT BID</div>
-                  <div style={{ fontSize: "3.75rem", color: "#ffd700", fontWeight: "700", lineHeight: 1, marginBottom: "6px" }}>₹{bidAmount}</div>
+                  <div className="body-text" style={{ color: "#fff", fontSize: "0.8rem", letterSpacing: "2px", marginBottom: "10px" }}>CURRENT BID</div>
+                  <div style={{ fontSize: "5.5rem", color: "#ffd700", fontWeight: "700", lineHeight: 1, marginBottom: "10px" }}>₹{bidAmount}</div>
                   {selectedTeam && (
                     <div style={{ fontSize: "1.1rem", color: teams.find(t => t.id === selectedTeam)?.color || "#fff", fontWeight: "700", marginBottom: "8px" }}>
                       {teams.find(t => t.id === selectedTeam)?.name}
                     </div>
                   )}
-                  <div className="body-text" style={{ color: "#444", fontSize: "0.75rem" }}>Base: ₹{currentPlayer.basePrice}</div>
-                  <div className="body-text" style={{ color: "#444", fontSize: "0.75rem" }}>Player {currentPlayer.id}</div>
+                  <div className="body-text" style={{ color: "#fff", fontSize: "0.75rem" }}>Base: ₹{currentPlayer.basePrice}</div>
+                  <div className="body-text" style={{ color: "#fff", fontSize: "0.75rem" }}>Player {currentPlayer.id}</div>
                 </div>
               </div>
             </div>
           ) : (
             <div style={{ background: "#0d0d1a", border: "1px solid #1f1f3a", borderRadius: "16px", padding: "80px", textAlign: "center", marginBottom: "32px" }}>
               <div style={{ fontSize: "3rem", color: "#4cc9f0", marginBottom: "12px" }}>🏆 AUCTION COMPLETE</div>
-              <div className="body-text" style={{ color: "#666", fontSize: "1.1rem" }}>All players have been processed</div>
+              <div className="body-text" style={{ color: "#fff", fontSize: "1.1rem" }}>All players have been processed</div>
             </div>
           )}
 
           {/* Team Budget Cards - Horizontal */}
           <div style={{ marginBottom: "24px" }}>
-            <div style={{ fontSize: "1rem", letterSpacing: "3px", color: "#555", marginBottom: "12px" }}>TEAM BUDGETS</div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "12px" }}>
+            <div style={{ fontSize: "1rem", letterSpacing: "3px", color: "#fff", marginBottom: "12px" }}>TEAM BUDGETS</div>
+            <div className="team-grid" style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "12px" }}>
               {teams.map(t => {
                 const pct = (t.budget / TOTAL_BUDGET) * 100;
                 const currentBid = teamBids[t.id] || currentPlayer?.basePrice || 0;
                 const isHighestBidder = selectedTeam === t.id;
                 return (
-                  <div key={t.id} className="team-card" style={{ borderTop: `3px solid ${t.color}`, textAlign: "center", background: isHighestBidder ? `${t.color}11` : "#111827", border: isHighestBidder ? `2px solid ${t.color}` : "1px solid #1f2937" }}>
+                  <div key={t.id} className="team-card" style={{ borderTop: `3px solid ${t.color}`, textAlign: "center", background: isHighestBidder ? `${t.color}11` : "#1A1A1A", border: isHighestBidder ? `2px solid ${t.color}` : "1px solid #2a2a2a" }}>
                     <div style={{ fontSize: "0.8rem", letterSpacing: "1px", marginBottom: "4px" }}>{t.name}</div>
-                    <div className="body-text" style={{ color: "#555", fontSize: "0.65rem", marginBottom: "6px" }}>{t.managerPlayer}</div>
+                    <div className="body-text" style={{ color: "#fff", fontSize: "0.75rem", marginBottom: "4px" }}>{t.managerPlayer}</div>
                     <div className="body-text" style={{ fontSize: "1.3rem", color: pct < 20 ? "#e63946" : pct < 40 ? "#f77f00" : "#4cc9f0", fontWeight: "700", marginBottom: "6px" }}>₹{t.budget}</div>
-                    <div className="body-text" style={{ color: "#666", fontSize: "0.7rem", marginBottom: "6px" }}>{t.squad.length} players</div>
+                    <div className="body-text" style={{ color: "#fff", fontSize: "0.7rem", marginBottom: "6px" }}>{t.squad.length} players</div>
                     {currentPlayer && (
                       <button 
                         className="bid-btn" 
                         style={{ 
-                          background: isHighestBidder ? t.color : lastBidder === t.id ? "#555" : "#1f2937", 
-                          color: isHighestBidder ? "#000" : "#fff", 
+                          background: "#fff", 
+                          color: "#000", 
                           fontSize: "0.85rem", 
                           padding: "8px 12px", 
                           width: "100%",
@@ -675,21 +684,21 @@ export default function App() {
 
           {/* Recent Sales */}
           <div>
-            <div style={{ fontSize: "1.1rem", letterSpacing: "3px", color: "#555", marginBottom: "16px" }}>RECENT SALES</div>
-            <div style={{ background: "#0d0d1a", border: "1px solid #1f1f3a", borderRadius: "12px", padding: "16px", maxHeight: "300px", overflowY: "auto" }}>
-              {log.length === 0 && <div className="body-text" style={{ color: "#333", fontSize: "0.9rem", textAlign: "center", padding: "24px" }}>No sales yet</div>}
+            <div style={{ fontSize: "1.1rem", letterSpacing: "3px", color: "#fff", marginBottom: "16px" }}>RECENT SALES</div>
+            <div style={{ background: "#1A1A1A", border: "1px solid #2a2a2a", borderRadius: "12px", padding: "16px", maxHeight: "300px", overflowY: "auto" }}>
+              {log.length === 0 && <div className="body-text" style={{ color: "#fff", fontSize: "0.9rem", textAlign: "center", padding: "24px" }}>No sales yet</div>}
               <div style={{ display: "grid", gap: "8px" }}>
                 {log.map((l, i) => {
                   const team = teams.find(t => t.name === l.team);
                   const player = players.find(p => p.name === l.player);
                   return (
-                    <div key={i} className="player-row" style={{ background: "#111", padding: "12px" }}>
+                    <div key={i} className="player-row" style={{ background: "#1A1A1A", padding: "12px", color: "#fff" }}>
                       <div style={{ background: CAT_COLOR[l.cat], width: "8px", height: "8px", borderRadius: "50%", flexShrink: 0 }}></div>
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: "0.95rem", marginBottom: "2px" }}>{l.player}</div>
-                        <div className="body-text" style={{ color: "#555", fontSize: "0.75rem" }}>{player?.position || ""} • Age {player?.age || ""}</div>
+                        <div className="body-text" style={{ color: "#fff", fontSize: "0.75rem" }}>{player?.position || ""} • Age {player?.age || ""}</div>
                       </div>
-                      <div className="body-text" style={{ color: team?.color || "#888", fontSize: "0.85rem", marginRight: "12px" }}>{l.team}</div>
+                      <div className="body-text" style={{ color: team?.color || "#fff", fontSize: "0.85rem", marginRight: "12px" }}>{l.team}</div>
                       <div style={{ color: "#ffd700", fontWeight: "700", fontSize: "1rem" }}>₹{l.amount}</div>
                     </div>
                   );
@@ -705,15 +714,15 @@ export default function App() {
         <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "20px" }}>
             {teams.map(t => (
-              <div key={t.id} style={{ background: "#0d0d1a", border: `1px solid ${t.color}33`, borderTop: `3px solid ${t.color}`, borderRadius: "10px", padding: "20px" }}>
+              <div key={t.id} style={{ background: "#1A1A1A", border: `2px solid ${t.color}`, borderRadius: "12px", padding: "20px" }}>
                 <div style={{ marginBottom: "16px" }}>
                   <div style={{ fontSize: "1.3rem", letterSpacing: "2px" }}>{t.name}</div>
-                  <div className="body-text" style={{ color: "#666", fontSize: "0.75rem", letterSpacing: "1px" }}>MGR PLAYER: {t.managerPlayer} · MANAGER: {t.manager}</div>
+                  <div className="body-text" style={{ color: "#fff", fontSize: "0.75rem", letterSpacing: "1px" }}>MGR PLAYER: {t.managerPlayer} · MANAGER: {t.manager}</div>
                   <div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px" }}>
-                    <div className="body-text" style={{ fontSize: "0.8rem", color: "#888" }}>{t.squad.length + 1} players (incl. mgr)</div>
+                    <div className="body-text" style={{ fontSize: "0.8rem", color: "#fff" }}>{t.squad.length + 1} players (incl. mgr)</div>
                     <div className="body-text" style={{ fontSize: "0.85rem", color: "#4cc9f0", fontWeight: "700" }}>₹{t.budget} left</div>
                   </div>
-                  <div className="body-text" style={{ fontSize: "0.75rem", color: "#555", marginTop: "2px" }}>
+                  <div className="body-text" style={{ fontSize: "0.75rem", color: "#fff", marginTop: "2px" }}>
                     Spent: ₹{TOTAL_BUDGET - t.budget} / ₹{TOTAL_BUDGET}
                   </div>
                 </div>
@@ -722,22 +731,22 @@ export default function App() {
                 <div className="player-row" style={{ background: `${t.color}15`, borderLeft: `2px solid ${t.color}` }}>
                   <div style={{ flex: 1 }}>
                     <span style={{ fontSize: "0.85rem" }}>{t.managerPlayer}</span>
-                    <span className="body-text" style={{ color: "#555", fontSize: "0.75rem", marginLeft: "8px" }}>Manager Player</span>
+                    <span className="body-text" style={{ color: "#fff", fontSize: "0.75rem", marginLeft: "8px" }}>Manager Player</span>
                   </div>
-                  <div style={{ color: "#888", fontSize: "0.8rem" }}>₹{t.managerValue}</div>
+                  <div style={{ color: "#fff", fontSize: "0.8rem" }}>₹{t.managerValue}</div>
                 </div>
 
                 {t.squad.length === 0 && (
-                  <div className="body-text" style={{ color: "#333", textAlign: "center", padding: "16px", fontSize: "0.85rem" }}>No players yet</div>
+                  <div className="body-text" style={{ color: "#fff", textAlign: "center", padding: "16px", fontSize: "0.85rem" }}>No players yet</div>
                 )}
                 {t.squad.map((p, i) => (
                   <div key={i} className="player-row">
                     <div style={{ background: CAT_COLOR[p.category], width: "6px", height: "6px", borderRadius: "50%", flexShrink: 0 }}></div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: "0.85rem" }}>{p.name}</div>
-                      <div className="body-text" style={{ color: "#555", fontSize: "0.72rem" }}>{p.category} · Age {p.age}</div>
+                      <div style={{ fontSize: "0.85rem", color: "#000" }}>{p.name}</div>
+                      <div className="body-text" style={{ color: "#333", fontSize: "0.72rem" }}>{p.category} · Age {p.age}</div>
                     </div>
-                    <div style={{ color: "#ffd700", fontSize: "0.8rem" }}>₹{p.soldFor}</div>
+                    <div style={{ color: "#000", fontSize: "0.8rem", fontWeight: "700" }}>₹{p.soldFor}</div>
                   </div>
                 ))}
               </div>
@@ -767,8 +776,8 @@ export default function App() {
               const count = players.filter(p => p.category === c).length;
               const sold = players.filter(p => p.category === c && p.soldTo && p.soldTo !== "UNSOLD").length;
               return (
-                <div key={c} className="body-text" style={{ background: "#111", borderRadius: "8px", padding: "8px 14px", borderLeft: `3px solid ${CAT_COLOR[c]}` }}>
-                  <div style={{ fontSize: "0.65rem", color: "#555", letterSpacing: "1px" }}>{c.toUpperCase()}</div>
+                <div key={c} className="body-text" style={{ background: "#1A1A1A", borderRadius: "8px", padding: "8px 14px", borderLeft: `3px solid ${CAT_COLOR[c]}` }}>
+                  <div style={{ fontSize: "0.65rem", color: "#fff", letterSpacing: "1px" }}>{c.toUpperCase()}</div>
                   <div style={{ fontSize: "1rem", color: "#fff" }}>{sold}/{count}</div>
                 </div>
               );
@@ -779,23 +788,23 @@ export default function App() {
             {filteredPlayers.map(p => {
               const soldTeam = p.soldTo && p.soldTo !== "UNSOLD" ? teams.find(t => t.id === p.soldTo) : null;
               return (
-                <div key={p.id} className="player-row" style={{ background: p.soldTo === "UNSOLD" ? "#0d0a0a" : p.soldTo ? "#0a0d0a" : "#111", opacity: p.soldTo === "UNSOLD" ? 0.5 : 1 }}>
-                  <div style={{ width: "28px", color: "#333", fontSize: "0.8rem", textAlign: "center" }} className="body-text">{p.id}</div>
+                <div key={p.id} style={{ background: "#1A1A1A", border: "1px solid #2a2a2a", borderRadius: "8px", padding: "12px 16px", display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px", opacity: p.soldTo === "UNSOLD" ? 0.5 : 1 }}>
+                  <div style={{ width: "28px", color: "#fff", fontSize: "0.8rem", textAlign: "center" }} className="body-text">{p.id.replace("CPL", "")}</div>
                   <div style={{ background: CAT_COLOR[p.category], width: "8px", height: "8px", borderRadius: "50%", flexShrink: 0 }}></div>
                   <div style={{ flex: 1 }}>
-                    <span style={{ fontSize: "0.9rem" }}>{p.name}</span>
-                    <span className="body-text" style={{ color: "#555", fontSize: "0.75rem", marginLeft: "8px" }}>Age {p.age}</span>
+                    <span style={{ fontSize: "0.9rem", color: "#fff" }}>{p.name}</span>
+                    <span className="body-text" style={{ color: "#fff", fontSize: "0.75rem", marginLeft: "8px" }}>Age {p.age}</span>
                   </div>
-                  <div className="body-text" style={{ color: "#555", fontSize: "0.8rem", width: "80px" }}>{p.position}</div>
+                  <div className="body-text" style={{ color: "#fff", fontSize: "0.8rem", width: "80px" }}>{p.position}</div>
                   <div style={{ width: "80px" }}>
                     <span className="cat-badge body-text" style={{ background: `${CAT_COLOR[p.category]}22`, color: CAT_COLOR[p.category] }}>{p.category}</span>
                   </div>
-                  <div className="body-text" style={{ width: "60px", textAlign: "right", color: "#888", fontSize: "0.8rem" }}>₹{p.basePrice}</div>
+                  <div className="body-text" style={{ width: "60px", textAlign: "right", color: "#fff", fontSize: "0.8rem" }}>₹{p.basePrice}</div>
                   <div className="body-text" style={{ width: "120px", textAlign: "right", fontSize: "0.8rem" }}>
-                    {p.soldTo === "UNSOLD" && <span style={{ color: "#444" }}>UNSOLD</span>}
+                    {p.soldTo === "UNSOLD" && <span style={{ color: "#888" }}>UNSOLD</span>}
                     {soldTeam && <span style={{ color: soldTeam.color }}>● {soldTeam.name.split(" ")[0]}</span>}
                     {soldTeam && <span style={{ color: "#ffd700", marginLeft: "6px" }}>₹{p.soldFor}</span>}
-                    {!p.soldTo && <span style={{ color: "#333" }}>—</span>}
+                    {!p.soldTo && <span style={{ color: "#888" }}>—</span>}
                   </div>
                 </div>
               );
