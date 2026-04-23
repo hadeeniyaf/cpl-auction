@@ -256,7 +256,7 @@ export default function App() {
 
   useEffect(() => {
     if (currentPlayer) setBidAmount(currentPlayer.basePrice);
-  }, [currentIdx, players]);
+  }, [currentIdx, players, currentPlayer]);
 
   function sellPlayer() {
     if (!selectedTeam || !bidAmount) return;
