@@ -95,19 +95,19 @@ function downloadExcel(players, teams) {
 }
 
 const TEAMS = [
-  { id: "lamasia", name: "LA MASIA", managerPlayer: "Saiful", manager: "Naji", managerValue: 80, color: "#e63946" },
-  { id: "homestead", name: "HOMESTEAD UNITED", managerPlayer: "Sreeshnu", manager: "Areef", managerValue: 70, color: "#2a9d8f" },
+  { id: "lamasia", name: "LA MASIA", managerPlayer: "Saiful Islam", manager: "Naji", managerValue: 80, color: "#e63946" },
+  { id: "homestead", name: "HOMESTEAD UNITED", managerPlayer: "Sreeshnu P", manager: "Areef", managerValue: 70, color: "#2a9d8f" },
   { id: "fclagos", name: "FC LAGOS", managerPlayer: "Riju", manager: "Cherappu", managerValue: 70, color: "#e9c46a" },
-  { id: "boca", name: "BOCA JUNIOR", managerPlayer: "Semee", manager: "Ameer", managerValue: 70, color: "#f4a261" },
-  { id: "galacticos", name: "GALACTICOS FC", managerPlayer: "Subhan", manager: "Ashraf Nani", managerValue: 100, color: "#a8dadc" },
-  { id: "athletic", name: "ATHLETIC FC", managerPlayer: "Fazil", manager: "Irshad", managerValue: 80, color: "#c77dff" },
+  { id: "boca", name: "BOCA JUNIOR", managerPlayer: "Semee Najath", manager: "Ameer", managerValue: 70, color: "#f4a261" },
+  { id: "galacticos", name: "GALACTICOS FC", managerPlayer: "Subuhan Ali", manager: "Ashraf Nani", managerValue: 100, color: "#a8dadc" },
+  { id: "athletic", name: "ATHLETIC FC", managerPlayer: "Fazil Nottan", manager: "Irshad", managerValue: 80, color: "#c77dff" },
 ];
 
-const TOTAL_BUDGET = 5000;
+const TOTAL_BUDGET = 2000;
 
 // Categories
 const CAT = { ICON: "Icon", FORWARD: "Forward", MIDFIELDER: "Midfielder", DEFENDER: "Defender", GK: "Goalkeeper", YOUNG: "Young" };
-const BASE_PRICE = { [CAT.ICON]: 500, [CAT.FORWARD]: 200, [CAT.MIDFIELDER]: 200, [CAT.DEFENDER]: 200, [CAT.GK]: 200, [CAT.YOUNG]: 100 };
+const BASE_PRICE = { [CAT.ICON]: 60, [CAT.FORWARD]: 35, [CAT.MIDFIELDER]: 35, [CAT.DEFENDER]: 35, [CAT.GK]: 35, [CAT.YOUNG]: 20 };
 const CAT_COLOR = {
   [CAT.ICON]: "#ffd700",
   [CAT.FORWARD]: "#ef233c",
@@ -117,7 +117,7 @@ const CAT_COLOR = {
   [CAT.YOUNG]: "#b5838d",
 };
 
-const ICON_NAMES = ["HANOON JAVAD C","Anees","Hadee Niyaf","Muhammad shahil tp","Shihab Ansil","Nusaif","AJIL MC","Hisham K","Favaz","Safvan","Mahroos","FASIL AMEEN T P"];
+const ICON_NAMES = ["HANOON JAVAD C","Anees","Hadee Niyaf","Asar","Shihab Ansil","Nusaif","AJIL MC","Hisham Kodi","Favaz","Safvan","Mahroos","FASIL AMEEN T P"];
 
 function getCategory(name, position, age) {
   const normName = name.trim().toLowerCase();
@@ -131,72 +131,75 @@ function getCategory(name, position, age) {
 }
 
 const RAW_PLAYERS = [
-  { name: "HANOON JAVAD C", age: 21, position: "Forward" },
-  { name: "SADIQUE ALI K", age: 26, position: "Defender" },
-  { name: "Nasmal", age: 26, position: "Defender" },
-  { name: "FASEEH MUHAMMAD", age: 23, position: "Goal Keeper" },
-  { name: "Mahroos", age: 25, position: "Defender" },
-  { name: "Senee Rihab", age: 20, position: "Forward" },
-  { name: "muhammed Ahraf", age: 25, position: "Forward" },
-  { name: "Afraz Hussain", age: 20, position: "Forward" },
-  { name: "Anees", age: 21, position: "Midfielder" },
-  { name: "Rabah hussain", age: 21, position: "Defender" },
-  { name: "ALEEM", age: 22, position: "Forward" },
-  { name: "Anfas p", age: 19, position: "Defender" },
-  { name: "Sufiyan mk", age: 21, position: "Forward" },
-  { name: "Hamdan Mohammed", age: 21, position: "Defender" },
-  { name: "Hadee Niyaf", age: 22, position: "Midfielder" },
-  { name: "Arshad Paara", age: 25, position: "Forward" },
-  { name: "Mohammed shaheed TK", age: 35, position: "Midfielder" },
-  { name: "Abdullah zubair", age: 18, position: "Midfielder" },
-  { name: "ASHMIL. C", age: 20, position: "Midfielder" },
-  { name: "Rejee Nashath", age: 26, position: "Defender" },
-  { name: "Shakeeb", age: 29, position: "Goal Keeper" },
-  { name: "Mohammed Sinan n", age: 19, position: "Midfielder" },
-  { name: "Muhammad shahil tp", age: 18, position: "Forward" },
-  { name: "Muhammed Alsabith", age: 18, position: "Midfielder" },
-  { name: "Shihab Ansil", age: 24, position: "Defender" },
-  { name: "Muhammad Nihal k", age: 17, position: "Midfielder" },
-  { name: "Muhammad Sanfas v", age: 18, position: "Defender" },
-  { name: "Shanid PP", age: 22, position: "Goal Keeper" },
-  { name: "Muhammed Ashique.P", age: 18, position: "Forward" },
-  { name: "Muhammed juhaif", age: 19, position: "Defender" },
-  { name: "Nusaif", age: 26, position: "Forward" },
-  { name: "Muhammed nihal. N", age: 21, position: "Defender" },
-  { name: "Zemi", age: 16, position: "Midfielder" },
-  { name: "Irfanul Azeez", age: 26, position: "Defender" },
-  { name: "Muhammed Nisar", age: 16, position: "Defender" },
-  { name: "Muhsin TP", age: 32, position: "Defender" },
-  { name: "Shabeeh mk", age: 18, position: "Midfielder" },
-  { name: "Shahinsha AP", age: 22, position: "Defender" },
-  { name: "Ameen", age: 21, position: "Defender" },
-  { name: "Safvan", age: 29, position: "Forward" },
-  { name: "Ihsan syed mc", age: 20, position: "Defender" },
-  { name: "Nufais", age: 23, position: "Forward" },
-  { name: "Muhammad siyas k", age: 19, position: "Midfielder" },
-  { name: "Fadil hanan p", age: 20, position: "Goal Keeper" },
-  { name: "Zulfi", age: 33, position: "Defender" },
-  { name: "Rashid.k", age: 21, position: "Defender" },
-  { name: "Afnas N", age: 17, position: "Midfielder" },
-  { name: "Shuhaibmk", age: 17, position: "Midfielder" },
-  { name: "AJIL MC", age: 23, position: "Defender" },
-  { name: "ABDUL MUHSIN", age: 31, position: "Defender" },
-  { name: "Ajnas Junu", age: 29, position: "Midfielder" },
-  { name: "Sinan mk", age: 18, position: "Goal Keeper" },
-  { name: "KUTTU", age: 33, position: "Defender" },
-  { name: "Muhammed aman", age: 16, position: "Midfielder" },
-  { name: "FASIL AMEEN T P", age: 25, position: "Defender" },
-  { name: "Aswanth KC", age: 24, position: "Forward" },
-  { name: "Muhammad Risal", age: 17, position: "Defender" },
-  { name: "Suhail c", age: 34, position: "Midfielder" },
-  { name: "Muhammed Rizwan", age: 17, position: "Midfielder" },
-  { name: "Favaz", age: 29, position: "Midfielder" },
-  { name: "RADHIN K", age: 16, position: "Goal Keeper" },
-  { name: "Hisham K", age: 25, position: "Forward" },
+  { id: "CPL002", name: "HANOON JAVAD C", age: 21, position: "Forward" },
+  { id: "CPL003", name: "SADIQUE ALI K", age: 26, position: "Defender" },
+  { id: "CPL004", name: "Nasmal", age: 26, position: "Defender" },
+  { id: "CPL006", name: "FASEEH MUHAMMAD", age: 23, position: "Goal Keeper" },
+  { id: "CPL007", name: "Mahroos", age: 25, position: "Defender" },
+  { id: "CPL009", name: "Senee Rihab", age: 20, position: "Forward" },
+  { id: "CPL010", name: "muhammed Ahraf", age: 25, position: "Forward" },
+  { id: "CPL011", name: "Afraz Hussain", age: 20, position: "Forward" },
+  { id: "CPL012", name: "Anees", age: 21, position: "Midfielder" },
+  { id: "CPL014", name: "Rabah hussain", age: 21, position: "Defender" },
+  { id: "CPL015", name: "ALEEM", age: 22, position: "Forward" },
+  { id: "CPL016", name: "Anfas p", age: 19, position: "Defender" },
+  { id: "CPL017", name: "Sufiyan mk", age: 21, position: "Forward" },
+  { id: "CPL018", name: "Hamdan Mohammed", age: 21, position: "Defender" },
+  { id: "CPL019", name: "Hadee Niyaf", age: 22, position: "Midfielder" },
+  { id: "CPL021", name: "Arshad Paara", age: 25, position: "Forward" },
+  { id: "CPL022", name: "Mohammed shaheed TK", age: 35, position: "Midfielder" },
+  { id: "CPL023", name: "Abdullah zubair", age: 18, position: "Midfielder" },
+  { id: "CPL024", name: "ASHMIL. C", age: 20, position: "Midfielder" },
+  { id: "CPL025", name: "Rejee Nashath", age: 26, position: "Defender" },
+  { id: "CPL026", name: "Shakeeb", age: 29, position: "Goal Keeper" },
+  { id: "CPL027", name: "Mohammed Sinan n", age: 19, position: "Midfielder" },
+  { id: "CPL028", name: "Muhammad shahil tp", age: 18, position: "Forward" },
+  { id: "CPL029", name: "Muhammed Alsabith", age: 18, position: "Midfielder" },
+  { id: "CPL030", name: "Shihab Ansil", age: 24, position: "Defender" },
+  { id: "CPL032", name: "Muhammad Nihal k", age: 17, position: "Midfielder" },
+  { id: "CPL033", name: "Muhammad Sanfas v", age: 18, position: "Defender" },
+  { id: "CPL034", name: "Shanid PP", age: 22, position: "Goal Keeper" },
+  { id: "CPL035", name: "Muhammed Ashique.P", age: 18, position: "Forward" },
+  { id: "CPL036", name: "Muhammed juhaif", age: 19, position: "Defender" },
+  { id: "CPL037", name: "Nusaif", age: 26, position: "Forward" },
+  { id: "CPL038", name: "Muhammed nihal. N", age: 21, position: "Defender" },
+  { id: "CPL039", name: "Zemi", age: 16, position: "Midfielder" },
+  { id: "CPL040", name: "Irfanul Azeez", age: 26, position: "Defender" },
+  { id: "CPL041", name: "Muhammed Nisar", age: 16, position: "Defender" },
+  { id: "CPL042", name: "Muhsin TP", age: 32, position: "Defender" },
+  { id: "CPL043", name: "Shabeeh mk", age: 18, position: "Midfielder" },
+  { id: "CPL044", name: "Shahinsha AP", age: 22, position: "Defender" },
+  { id: "CPL045", name: "Ameen", age: 21, position: "Defender" },
+  { id: "CPL046", name: "Safvan", age: 29, position: "Forward" },
+  { id: "CPL047", name: "Ihsan syed mc", age: 20, position: "Defender" },
+  { id: "CPL048", name: "Nufais", age: 23, position: "Forward" },
+  { id: "CPL049", name: "Muhammad siyas k", age: 19, position: "Midfielder" },
+  { id: "CPL050", name: "Fadil hanan p", age: 20, position: "Goal Keeper" },
+  { id: "CPL051", name: "Zulfi", age: 33, position: "Defender" },
+  { id: "CPL052", name: "Rashid.k", age: 21, position: "Defender" },
+  { id: "CPL053", name: "Afnas N", age: 17, position: "Midfielder" },
+  { id: "CPL054", name: "Shuhaibmk", age: 17, position: "Midfielder" },
+  { id: "CPL055", name: "AJIL MC", age: 23, position: "Defender" },
+  { id: "CPL056", name: "ABDUL MUHSIN", age: 31, position: "Defender" },
+  { id: "CPL057", name: "Ajnas Junu", age: 29, position: "Midfielder" },
+  { id: "CPL058", name: "Sinan mk", age: 18, position: "Goal Keeper" },
+  { id: "CPL059", name: "KUTTU", age: 33, position: "Defender" },
+  { id: "CPL060", name: "Muhammed aman", age: 16, position: "Midfielder" },
+  { id: "CPL061", name: "FASIL AMEEN T P", age: 25, position: "Defender" },
+  { id: "CPL062", name: "Aswanth KC", age: 24, position: "Forward" },
+  { id: "CPL063", name: "Muhammad Risal", age: 17, position: "Defender" },
+  { id: "CPL064", name: "Suhail c", age: 34, position: "Midfielder" },
+  { id: "CPL065", name: "Muhammed Rizwan", age: 17, position: "Midfielder" },
+  { id: "CPL066", name: "Favaz", age: 29, position: "Midfielder" },
+  { id: "CPL067", name: "RADHIN K", age: 16, position: "Goal Keeper" },
+  { id: "CPL068", name: "Anshad Thayatheel", age: 32, position: "Defender" },
+  { id: "CPL069", name: "MOHAMMED SADIQALI K", age: 31, position: "Defender" },
+  { id: "CPL070", name: "Asar", age: 31, position: "Defender" },
+  { id: "CPL071", name: "Haneefa", age: 34, position: "Forward" },
 ];
 
-const PLAYERS = RAW_PLAYERS.map((p, i) => ({
-  id: i + 1,
+const PLAYERS = RAW_PLAYERS.map((p) => ({
+  id: p.id,
   name: p.name,
   age: p.age,
   position: p.position,
@@ -204,6 +207,7 @@ const PLAYERS = RAW_PLAYERS.map((p, i) => ({
   basePrice: BASE_PRICE[getCategory(p.name, p.position, p.age)],
   soldTo: null,
   soldFor: null,
+  photoId: p.id,
 }));
 
 const CAT_ORDER = [CAT.ICON, CAT.GK, CAT.DEFENDER, CAT.MIDFIELDER, CAT.FORWARD, CAT.YOUNG];
@@ -218,6 +222,7 @@ export default function App() {
   const [bidAmount, setBidAmount] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("");
   const [teamBids, setTeamBids] = useState({});
+  const [lastBidder, setLastBidder] = useState(null);
   const [view, setView] = useState("auction");
   const [log, setLog] = useState([]);
   const [filterCat, setFilterCat] = useState("All");
@@ -259,11 +264,19 @@ export default function App() {
     if (currentPlayer) {
       setBidAmount(currentPlayer.basePrice);
       setTeamBids({});
+      setLastBidder(null);
     }
   }, [currentIdx, players, currentPlayer]);
 
   function placeBid(teamId) {
     if (!currentPlayer) return;
+    
+    // Prevent same team from bidding twice consecutively
+    if (lastBidder === teamId) {
+      alert('Another team must bid before you can bid again!');
+      return;
+    }
+    
     const team = teams.find(t => t.id === teamId);
     if (!team) return;
     
@@ -278,6 +291,7 @@ export default function App() {
     setTeamBids(prev => ({ ...prev, [teamId]: newBid }));
     setBidAmount(newBid);
     setSelectedTeam(teamId);
+    setLastBidder(teamId);
   }
 
   function sellPlayer() {
@@ -306,6 +320,7 @@ export default function App() {
     setSelectedTeam("");
     setBidAmount("");
     setTeamBids({});
+    setLastBidder(null);
     const remaining = unsoldPlayers.filter(p => p.id !== currentPlayer.id);
     if (currentIdx >= remaining.length) setCurrentIdx(Math.max(0, remaining.length - 1));
   }
@@ -314,6 +329,7 @@ export default function App() {
     setPlayers(prev => prev.map(p =>
       p.id === currentPlayer.id ? { ...p, soldTo: "UNSOLD" } : p
     ));
+    setLastBidder(null);
     const remaining = unsoldPlayers.filter(p => p.id !== currentPlayer.id);
     if (currentIdx >= remaining.length) setCurrentIdx(Math.max(0, remaining.length - 1));
   }
@@ -432,7 +448,7 @@ export default function App() {
                 {/* Player Info - Left */}
                 <div>
                   <div style={{ fontSize: "0.65rem", letterSpacing: "2px", color: "#666", marginBottom: "6px" }} className="body-text">NOW UP FOR AUCTION</div>
-                  <div style={{ fontSize: "2.2rem", letterSpacing: "2px", lineHeight: 1.1, color: currentPlayer.category === CAT.ICON ? "#ffd700" : "#fff", marginBottom: "10px", fontWeight: "700" }}>
+                  <div style={{ fontSize: "3.3rem", letterSpacing: "2px", lineHeight: 1.1, color: currentPlayer.category === CAT.ICON ? "#ffd700" : "#fff", marginBottom: "10px", fontWeight: "700" }}>
                     {currentPlayer.name.toUpperCase()}
                   </div>
                   <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
@@ -446,30 +462,42 @@ export default function App() {
                 </div>
 
                 {/* Player Avatar - Center */}
-                <div style={{ width: "110px", height: "110px", borderRadius: "12px", background: `linear-gradient(135deg, ${CAT_COLOR[currentPlayer.category]}33, ${CAT_COLOR[currentPlayer.category]}11)`, border: `2px solid ${CAT_COLOR[currentPlayer.category]}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3.5rem" }}>
-                  👤
+                <div style={{ position: "relative" }}>
+                  <button className="bid-btn" style={{ position: "absolute", left: "-80px", top: "50%", transform: "translateY(-50%)", background: "#1f2937", color: "#4cc9f0", padding: "12px 20px" }} onClick={skipPlayer}>
+                    ← SKIP
+                  </button>
+                  <div style={{ width: "160px", height: "160px", borderRadius: "12px", background: `linear-gradient(135deg, ${CAT_COLOR[currentPlayer.category]}33, ${CAT_COLOR[currentPlayer.category]}11)`, border: `3px solid ${CAT_COLOR[currentPlayer.category]}`, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <img 
+                      src={`/players-photos/${currentPlayer.photoId}.jpg`} 
+                      alt={currentPlayer.name}
+                      onError={(e) => {
+                        // Try different extensions if jpg fails
+                        const extensions = ['png', 'jpeg', 'JPG', 'JPEG', 'PNG', 'heic', 'HEIC', 'webp'];
+                        const currentSrc = e.target.src;
+                        const currentExt = currentSrc.split('.').pop().split('?')[0];
+                        const nextExtIndex = extensions.indexOf(currentExt) + 1;
+                        if (nextExtIndex < extensions.length) {
+                          e.target.src = `/players-photos/${currentPlayer.photoId}.${extensions[nextExtIndex]}`;
+                        } else {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.innerHTML = '<div style="font-size: 5rem">👤</div>';
+                        }
+                      }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  </div>
+                  <button className="bid-btn" style={{ position: "absolute", right: "-80px", top: "50%", transform: "translateY(-50%)", background: "#e63946", color: "#fff", fontSize: "1.1rem", padding: "12px 20px" }} onClick={sellPlayer} disabled={!selectedTeam}>
+                    SOLD →
+                  </button>
                 </div>
 
                 {/* Current Bid - Right */}
                 <div style={{ textAlign: "right" }}>
                   <div className="body-text" style={{ color: "#555", fontSize: "0.65rem", letterSpacing: "2px", marginBottom: "6px" }}>CURRENT BID</div>
-                  <div style={{ fontSize: "2.5rem", color: "#ffd700", fontWeight: "700", lineHeight: 1, marginBottom: "6px" }}>₹{bidAmount}</div>
+                  <div style={{ fontSize: "3.75rem", color: "#ffd700", fontWeight: "700", lineHeight: 1, marginBottom: "6px" }}>₹{bidAmount}</div>
                   <div className="body-text" style={{ color: "#444", fontSize: "0.75rem" }}>Base: ₹{currentPlayer.basePrice}</div>
-                  <div className="body-text" style={{ color: "#444", fontSize: "0.75rem" }}>Player #{currentPlayer.id} of {players.length}</div>
+                  <div className="body-text" style={{ color: "#444", fontSize: "0.75rem" }}>Player {currentPlayer.id}</div>
                 </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div style={{ marginTop: "20px", display: "flex", gap: "12px", justifyContent: "center" }}>
-                <button className="bid-btn" style={{ background: "#e63946", color: "#fff", fontSize: "1.1rem", padding: "12px 32px" }} onClick={sellPlayer} disabled={!selectedTeam}>
-                  🏷️ SOLD
-                </button>
-                <button className="bid-btn" style={{ background: "#1f2937", color: "#888" }} onClick={markUnsold}>
-                  UNSOLD
-                </button>
-                <button className="bid-btn" style={{ background: "#1f2937", color: "#4cc9f0" }} onClick={skipPlayer}>
-                  SKIP →
-                </button>
               </div>
             </div>
           ) : (
@@ -497,17 +525,19 @@ export default function App() {
                       <button 
                         className="bid-btn" 
                         style={{ 
-                          background: isHighestBidder ? t.color : "#1f2937", 
+                          background: isHighestBidder ? t.color : lastBidder === t.id ? "#555" : "#1f2937", 
                           color: isHighestBidder ? "#000" : "#fff", 
                           fontSize: "0.85rem", 
                           padding: "8px 12px", 
                           width: "100%",
-                          marginBottom: "6px"
+                          marginBottom: "6px",
+                          opacity: lastBidder === t.id ? 0.5 : 1,
+                          cursor: lastBidder === t.id ? "not-allowed" : "pointer"
                         }} 
                         onClick={() => placeBid(t.id)}
-                        disabled={t.budget < (currentBid + 50)}
+                        disabled={t.budget < (currentBid + 50) || lastBidder === t.id}
                       >
-                        {isHighestBidder ? `₹${currentBid}` : 'BID +50'}
+                        {isHighestBidder ? `₹${currentBid}` : lastBidder === t.id ? 'WAIT' : 'BID +50'}
                       </button>
                     )}
                     <div style={{ background: "#0a0a0f", borderRadius: "4px", height: "4px", overflow: "hidden" }}>
